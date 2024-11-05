@@ -1,0 +1,6 @@
+extend type Query {
+    """
+    -auth admin, user
+    """
+    getResolverActivities:EdgeResolverActivity
+}

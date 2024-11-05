@@ -1,0 +1,5 @@
+input SetDeviceTransferEvidence {
+    photoPath:String!
+    transferType:TransferTypeEnum!
+    id_number: String!
+}

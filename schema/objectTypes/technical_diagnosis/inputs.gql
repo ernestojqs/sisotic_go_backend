@@ -1,0 +1,9 @@
+input CreateTechnicalDiagnosis {
+    deviceID:ID
+    description:String!
+    """
+    -only set if the support is local
+    """
+    localResolverActivities:[CreateLocalResolverActivity!]    
+    ##diagnosticUser:User!
+}

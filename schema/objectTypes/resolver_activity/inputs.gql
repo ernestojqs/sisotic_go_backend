@@ -1,0 +1,10 @@
+input CreateResolverActivity {
+    technicalDiagnosisID: ID!
+    description:String!
+    recommendations:String
+}
+
+input CreateLocalResolverActivity {
+    description:String
+    recommendations:String
+}

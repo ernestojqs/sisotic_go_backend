@@ -1,0 +1,11 @@
+enum SupportStatusEnum{
+    pending
+    process
+    completed
+    delivered
+}
+
+enum PlaceOfCareEnum{
+    local
+    workshop
+}

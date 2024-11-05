@@ -1,0 +1,10 @@
+extend type Mutation{
+    """
+    -auth admin, user
+    """
+    createJobArea(input:CreateJobArea): JobArea
+    """
+    -auth admin, user
+    """
+    updateJobArea(input:UpdateJobArea): JobArea
+}

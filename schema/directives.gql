@@ -1,0 +1,21 @@
+"activa la paginacion en las consultas"
+directive @paginate(
+    page: Int = 1,
+    split: Int = 10
+) on FIELD
+"""
+Ordenamiento de la consulta.
+
+Esta directiva recibe un array, donde cada elemento es una tupla con el nombre de la columna y el orden.
+los campos son:
+    field: nombre de la columna
+    order: asc o desc
+order es opcional, si no se especifica se toma como desc
+"""
+directive @sort(
+    "Recibe un array de tuplas con el nombre de la columna y el orden"
+    input: [SortInput!]!
+) on FIELD
+directive @search(
+    input:[SearchInput]
+) on FIELD

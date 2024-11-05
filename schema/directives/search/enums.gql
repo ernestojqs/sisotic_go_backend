@@ -1,0 +1,100 @@
+enum KindEnum{
+    String
+    Int
+    Float
+    Boolean
+    ID
+    Date
+    DateTime
+    Age
+}
+"""
+La documentacion completa de todos estos operadores la encontrara desglosada en
+la documentacion de mongo oficial. https://www.mongodb.com/docs/manual/reference/operator/query/.
+Algunos operadores no usan algunas de las caracteristicas de ValueInput.
+"""
+enum OperatorEnum{
+    """
+    Indica que se buscara el valor igual a (=). "values" no se tomara en cuenta.
+    """
+    eq
+    """
+    Indica que se buscara el valor mayor que (>). "values" no se tomara en cuenta.
+    """
+    gt
+    """
+    Indica que se buscara el valor mayor o igual que (>=). "values" no se tomara en cuenta.
+    """
+    gte
+    """
+    Indica que se buscara el valor menor que (<). "values" no se tomara en cuenta.
+    """
+    lt
+    """
+    Indica que se buscara el valor menor o igual que (<=). "values" no se tomara en cuenta.
+    """
+    lte
+    """
+    Indica que se buscara el valor distinto a (!=). "values" no se tomara en cuenta.
+    """
+    ne
+    """
+    Este operador ayuda a reducir el tamaño de las queries, siendo el equivalente a un "and"
+    del mismo field. vea https://www.mongodb.com/docs/manual/reference/operator/query/all/#mongodb-query-op.-all
+    para mas informacion.
+    En este momento este operador no soporta busquedas anidadas aunque en proximas versiones se añadiran todas las caracteristicas.
+    """
+    all
+    """
+    "IN". Establece busquedas de valores dentro de un array. El search descartara el campo "value" y tomara
+    en cuenta el campo "values"
+    """
+    in
+    """
+    "NOT IN". Establece busquedas de valores dentro de un array. El search descartara el campo "value" y tomara
+    en cuenta el campo "values".
+    """
+    nin
+    """
+    Si se usa este operador, "value" sera analizado como una expresion regular.
+    Tambien sera tomado en cuenta "regexOptions". "values" no sera tomado en cuenta.
+    """
+    regex
+    """
+    "size" comprueba si el tamaño de un elemento de tipo array es igual al valor dado.
+    el campo "values" no se tomara en cuenta.
+    """
+    size
+    """
+    Selecciona los documentos mientras que "remainder" sea igual al resto de la division del campo seleccionado entre el valor del "divisor".
+    Este operador usa obligatoriamente el input "ModInput" definido en "modOptions".
+    Los campos "value" y "values" no se tomaran en cuenta.
+    """
+    mod
+    """
+    Selecciona el registro solo si el el field existe
+    """
+    exists
+}
+enum OptionsRegexEnum{
+    i
+    m
+    x
+    s
+}
+enum CenterDistanceOperatorEnum{
+    meter
+    kilometer
+    miles
+}
+enum NearDistanceOperatorEnum{
+    meter
+    radians
+}
+enum GeometryTypeEnum{
+    Point
+    LineString
+    Polygon
+    MultiPoint
+    MultiLineString
+}

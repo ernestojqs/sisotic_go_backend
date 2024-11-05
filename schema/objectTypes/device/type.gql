@@ -1,0 +1,47 @@
+type Device {
+    """
+    -type ID
+    """
+    _id:ID!
+    placeOfCare:PlaceOfCareEnum!
+    """
+    -type ID
+    """
+    collegeDependency:CollegeDependency!
+    isSupport:Boolean!
+    assetCode:String!
+    serialCode:String
+    type:String
+    model:String
+    groupID:ID
+    observations:[Observation]
+    transferEvidences:[TransferEvidence]
+    """
+    -type ID
+    """
+    receiverUser:User!
+    """
+    -type [ID]
+    """
+    technicalDiagnosis:[TechnicalDiagnosis]!
+    supportStatus:SupportStatusEnum
+    """
+    -created
+    """
+    created: DateTime
+    """
+    -updated
+    """
+    updated: DateTime
+}
+
+type EdgeDevice {
+    """
+    -bsonOmmit
+    """
+    edges:[Device]
+    """
+    -bsonOmmit
+    """
+    pageInfo:PageInfo
+}

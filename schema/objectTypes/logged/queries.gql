@@ -1,0 +1,7 @@
+extend type Query{
+    login(input:LoginInput): Logged   
+    """
+    -auth admin, user
+    """  
+    logout(platform: PlatformEnum): Logged
+}

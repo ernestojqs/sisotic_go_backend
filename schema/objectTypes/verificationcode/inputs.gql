@@ -1,0 +1,12 @@
+input VerifyCode{
+    email: Email!
+    submittedCode: String!
+    isEmailVerification: Boolean
+}
+
+
+input UpdateVerifyCode {
+    email: Email! 
+    isResetPassword: Boolean
+}
+

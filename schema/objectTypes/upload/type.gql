@@ -1,0 +1,26 @@
+type Upload {
+    """
+    -bsonOmit
+    """
+    name: String!
+    """
+    -bsonOmit
+    """
+    size: Float!
+    """
+    -bsonOmit
+    """
+    type: String!
+    """
+    -bsonOmit
+    """
+    folder: String!
+    """
+    -bsonOmit
+    """
+    sizeUploaded: Float!
+    """
+    -bsonOmit
+    """
+    display: String
+}

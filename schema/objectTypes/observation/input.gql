@@ -1,0 +1,4 @@
+input SetDeviceObservationInput {
+    description:String
+    photoPath:String
+}

@@ -1,0 +1,8 @@
+type PageInfo {
+    page: Int!
+    pages: Int!
+    shown: Int!
+    total: Int!
+    overall: Int!
+    split: Int!
+}

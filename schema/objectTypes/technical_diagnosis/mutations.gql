@@ -1,0 +1,6 @@
+extend type Mutation{
+    """
+    -auth admin, user
+    """
+    createTechnicalDiagnosis(input: CreateTechnicalDiagnosis): TechnicalDiagnosis
+}

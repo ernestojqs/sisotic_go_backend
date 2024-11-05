@@ -1,0 +1,34 @@
+type Task {
+    """
+    -type ID
+    """
+    _id:ID!
+    description:String!
+    """
+    -type ID
+    """
+    jobArea:JobArea!
+    """
+    -type ID
+    """
+    autor: User!
+    """
+    -created
+    """
+    created:DateTime
+    """
+    -updated
+    """
+    updated:DateTime
+}
+
+type EdgeTask{
+    """
+    -bsonOmmit
+    """
+    edges:[Task]
+    """
+    -bsonOmmit
+    """
+    pageInfo:PageInfo
+}

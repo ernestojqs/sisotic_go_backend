@@ -1,0 +1,4 @@
+type Ubication{
+    lat:Latitude
+    lon: Longitude   
+}

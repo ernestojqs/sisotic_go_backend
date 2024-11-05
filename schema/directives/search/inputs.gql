@@ -1,0 +1,128 @@
+input SearchInput{
+    "Nombre del campo que por el cual se va a filtrar"
+    field: String
+    """
+    Valor con opciones avanzadas del campo que se va a filtrar.
+    Tome en cuenta que al usar multiples valores con el mismo operador
+    se tomara unicamente como valido el último "value" dado.
+    Si necesita buscar multiples valores del mismo "field" puede intentar buscar con los operadores
+    "in", "nin" o "all".
+    Para buscar multiples value pero por el mismo field y con el mismo operador tambien puede usar, en dependencia
+    de la necesidad, "and", "not", "nor" u "or"
+    """
+    value: [ValueInput]
+    """
+    Todos los "SearchInput" dentro de este attributo seran concatenados en la búsqueda con el operador AND.
+    Si este valor esta seteado se ignoran los atributos: "field", "value" y "values".
+    """
+    and:[SearchInput]
+    """
+    Todos los "SearchInput" dentro de este attributo seran concatenados en la búsqueda con el operador NOT.
+    Si este valor esta seteado se ignoran los atributos: "field", "value" y "values".
+    """
+    not:[SearchInput]
+    """
+    Todos los "SearchInput" dentro de este attributo seran concatenados en la búsqueda con el operador NOR.
+    Si este valor esta seteado se ignoran los atributos: "field", "value" y "values".
+    """
+    nor:[SearchInput]
+    """
+    Todos los "SearchInput" dentro de este attributo seran concatenados en la búsqueda con el operador OR.
+    Si este valor esta seteado se ignoran los atributos: "field", "value" y "values".
+    """
+    or:[SearchInput]
+    """
+    Busca el valor que se encuntre asignado
+    Dentro de un objeto
+    """
+    elemMatch: [ElemMatchInput]
+
+    geoSpatial: GeoSpatialInput
+    
+
+}
+input ValueInput{
+    """
+    Único valor de campo que se va a filtrar.
+    Tome en cuenta que por defecto el atributo "Kind" es "String". Si necesita que el valor a buscar sea
+    de otro tipo, puede modificarlo cambiando el valor de este atributo.
+    """
+    value:String
+    """
+    Multiples valores del campo que se va a filtrar.
+    Este atributo es habilitado cuando el operador es de tipo "in", "nin" o "all", de resto no será
+    tomado en cuenta.
+    Note que por defecto el atributo "Kind" es "String". Si necesita que el valor a buscar sea
+    de otro tipo, puede modificarlo cambiando el valor de este atributo.
+    """
+    values:[String]
+    "tipo de variable del valor a buscar."
+    kind: KindEnum = String
+    "Operador de comparacion"
+    operator: OperatorEnum = eq
+    """
+    Esta opcion se toma en cuenta cuando el atributo "operator" es igual a "regex".
+    """
+    regexOption:OptionsRegexEnum = i
+    """
+    Define los valores del divisor y el remainder al usar el operador mod.
+    Esta opcion se toma en cuenta cuando el atributo "operator" es igual a "mod".
+    """
+    modOption:ModInput
+}
+input ModInput{
+    "Valor por defecto: 2"
+    divisor: Float = 2
+    "Valor por defecto: 0"
+    remainder: Float = 0
+}
+input ElemMatchInput{
+    "Nombre del arreglo de Objetos"
+    field: String
+    "Campo del objeto con el cual se quiere hacer match"
+    fieldMatch: String
+    "Valor del objeto al cual se quiere hacer match"
+    value: String
+    "Tipo del valor que se quiere buscar es caseSensitive"
+    kind: KindEnum = String
+}
+
+input GeoSpatialInput{
+    geoIntersects:[String]
+    geoWithin: GeoSpatialGeoWithinOperatorsInput
+    near:GeoSpatialNearInput
+    nearSphere:[String]
+}
+input GeoSpatialNearInput{
+    pointCoordinates: CoordinatesInput!
+    maxDistance: Float
+}
+input GeoSpatialGeoWithinOperatorsInput{
+    box: BoxOperatorInput
+    center: CenterOperatorInput
+    centerSphere: CenterOperatorInput
+    geometry: GeometryOperatorInput
+    polygon: [CoordinatesInput]
+}
+
+input CenterOperatorInput{
+    lat: Float!
+    lon: Float!
+    radius: Float!
+    radiusOperator: CenterDistanceOperatorEnum!
+}
+
+input BoxOperatorInput{
+    bottomLeft: Float!
+    upperRight: Float!
+}
+
+input GeometryOperatorInput{
+    type: GeometryTypeEnum!
+    coordinates: [CoordinatesInput!]!
+}
+
+input CoordinatesInput{
+    lat: Float!
+    lon: Float!
+}

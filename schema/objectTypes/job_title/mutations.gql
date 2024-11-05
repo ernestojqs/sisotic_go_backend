@@ -1,0 +1,10 @@
+extend type Mutation{
+    """
+    -auth admin, user
+    """
+    createJobTitle(input:CreateJobTitle): JobTitle
+    """
+    -auth admin, user
+    """
+    updateJobTitle(input:UpdateJobTitle): JobTitle
+}

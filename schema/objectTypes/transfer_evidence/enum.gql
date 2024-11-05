@@ -1,0 +1,4 @@
+enum TransferTypeEnum{
+    entry
+    exit
+}

@@ -1,0 +1,34 @@
+input CreateDevice {
+   placeOfCare:PlaceOfCareEnum!
+   collegeDependency:ID!
+   isSupport:Boolean!
+   assetCode:String
+   serialCode:String
+   type:String
+   model:String
+   #groupID:ID
+   observations:[SetDeviceObservationInput!]
+   transferEvidence: SetDeviceTransferEvidence
+   """
+   -must set this if the place of care is local
+   """
+   localTechnicalDiagnosis:[CreateTechnicalDiagnosis!]
+}
+
+input UpdateDevice {  
+   """
+   -type ID
+   """
+   _id: ID!
+   collegeDependency: ID
+   assetCode:String
+   serialCode:String
+   type:String
+   model:String
+   transferEvidence: SetDeviceTransferEvidence
+   #groupID:ID
+   observations:[SetDeviceObservationInput!]
+   transferEvidences:SetDeviceTransferEvidence
+   supportStatus:SupportStatusEnum
+
+}

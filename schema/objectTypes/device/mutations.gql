@@ -1,0 +1,14 @@
+extend type Mutation{
+    """
+    -auth admin, user
+    """
+    createDevices(input: [CreateDevice]): [Device]
+    """
+    -auth admin, user
+    """
+    updateDevice(input: UpdateDevice): Device
+    """
+    -auth admin, user
+    """
+    deleteDevice(_id: ID): Device
+}

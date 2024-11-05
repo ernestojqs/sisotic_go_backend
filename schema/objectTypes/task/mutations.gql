@@ -1,0 +1,10 @@
+extend type Mutation{
+    """
+    -auth admin, user
+    """
+    createTask(input:CreateTask): Task
+    """
+    -auth admin, user
+    """
+    updateTask(input:UpdateTask): Task
+}

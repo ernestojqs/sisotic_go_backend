@@ -1,0 +1,14 @@
+extend type Mutation{
+    """
+    -auth admin, user
+    """
+    createCollegeDependency(input:CreateCollegeDependency): CollegeDependency
+    """
+    -auth admin, user
+    """
+    updateCollegeDependency(input:UpdateCollegeDependency): CollegeDependency
+    """
+    -auth admin, user
+    """
+    deleteCollegeDependency(_id:ID!): CollegeDependency
+}

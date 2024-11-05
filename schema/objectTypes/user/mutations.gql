@@ -1,0 +1,12 @@
+extend type Mutation{
+    createUser(input:CreateUser): User
+    """
+    -auth admin, user
+    """
+    updateUser(input:UpdateUser): User
+    """
+    -auth admin, user
+    """
+    deleteUser(_id: ID!): User 
+    resetUserPassword(input:ResetUserPassword): User
+}

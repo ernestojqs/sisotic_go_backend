@@ -1,0 +1,51 @@
+{
+    "httpPort": "8080",
+    "httpsPort": "8443",
+    "cookieName":"OTIC_SESSION",
+    "server": [
+        {
+            "host": "localhost",
+            "cert":"etc/http/certs/localhost/cert.pem",
+            "key":"etc/http/certs/localhost/key.pem",
+            "letsEncrypt": false,
+            "redirectToHttps": false,
+            "enableHttps": true,
+            "path":[
+                {
+                    "mode":"gql",
+                    "endpoint":"/"
+                },
+                {
+                    "mode":"file",
+                    "endpoint":"/files/",
+                    "path":"."
+                },
+                {
+                    "mode":"websocket",
+                    "endpoint":"/ws"
+                },
+                {
+                    "mode":"rest",
+                    "endpoint":"/pdf"
+                }
+            ]
+        },
+        {
+            "host": "www.localhost",
+            "cert":"etc/http/certs/localhost/cert.pem",
+            "key":"etc/http/certs/localhost/key.pem",
+            "redirectToHttps": false,
+            "enableHttps": true,
+            "path":[
+                {
+                    "mode":"file",
+                    "endpoint":"/",
+                    "rewrite":true,
+                    "RewriteTo":"/index.html",
+                    "fileDefault":"index.html",
+                    "path":"htdocs/system"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+type JobArea {
+    """
+    -type ID
+    """
+    _id:ID!
+    name:String
+    """
+    -type [ID]
+    """
+    jobTitles: [JobTitle]
+    """
+    -created
+    """
+    created:DateTime
+    """
+    -updated
+    """
+    updated:DateTime
+}
+type EdgeJobArea {
+    """
+    -bsonOmmit
+    """
+    edges:[JobArea]
+    """
+    -bsonOmmit
+    """
+    pageInfo:PageInfo
+}

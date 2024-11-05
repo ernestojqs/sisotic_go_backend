@@ -1,0 +1,4 @@
+input UbicationInput{
+    lat:Latitude!
+    lon: Longitude!
+}

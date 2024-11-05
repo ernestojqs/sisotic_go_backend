@@ -1,0 +1,33 @@
+type User {
+    """
+    -type ID
+    """
+    _id:ID!
+    firstName:String!
+    lastName:String!
+    email: Email!
+    phoneNumber:PhoneNumber
+    """
+    -type ID
+    """
+    jobTitle:JobTitle
+    role:RoleEnum
+    """
+    -created
+    """
+    created:DateTime
+    """
+    -updated
+    """
+    updated:DateTime
+}
+type EdgeUser {
+    """
+    -bsonOmmit
+    """
+    edges:[User]
+    """
+    -bsonOmmit
+    """
+    pageInfo:PageInfo
+}

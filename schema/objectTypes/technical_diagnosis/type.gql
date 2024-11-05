@@ -1,0 +1,35 @@
+type TechnicalDiagnosis {
+    """
+    -type ID
+    """
+    _id:ID!
+    description:String!
+    """
+    -type [ID]
+    """
+    resolverActivities:[ResolverActivity]!
+    """
+    -type ID
+    """
+    diagnosticUser:User!
+    """
+    -created
+    """
+    created: DateTime
+    """
+    -updated
+    """
+    updated: DateTime
+}
+
+
+type EdgeTechnicalDiagnosis {
+    """
+    -bsonOmmit
+    """
+    edges:[TechnicalDiagnosis]
+    """
+    -bsonOmmit
+    """
+    pageInfo:PageInfo
+}

@@ -1,0 +1,5 @@
+type TransferEvidence {
+    photoPath:String!
+    transferType:TransferTypeEnum!
+    id_number: String!
+}

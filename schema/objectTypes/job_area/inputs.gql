@@ -1,0 +1,10 @@
+input CreateJobArea {
+    name:String!
+}
+input UpdateJobArea {
+    """
+    -type ID
+    """
+    _id:ID!
+    name:String
+}

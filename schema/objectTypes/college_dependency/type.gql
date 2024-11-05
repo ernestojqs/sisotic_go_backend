@@ -1,0 +1,27 @@
+type CollegeDependency {
+    """
+    -type ID
+    """
+    _id:ID!
+    name:String
+    """
+    -created
+    """
+    created:DateTime
+    """
+    -updated
+    """
+    updated:DateTime
+}
+
+
+type EdgeCollegeDependency {
+    """
+    -bsonOmmit
+    """
+    edges:[CollegeDependency]
+    """
+    -bsonOmmit
+    """
+    pageInfo:PageInfo
+}

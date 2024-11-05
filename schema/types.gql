@@ -1,0 +1,17 @@
+type SystemInfo{
+    version:String
+    name:String
+    description:String
+    changeLog:[ChangeLog]
+}
+type ChangeLog{
+    version:String
+    date:String
+    description:String
+}
+type Query{
+    systemInfo:SystemInfo
+}
+type Mutation{
+    addChangeLog(version:String!,date:String!,description:String!):ChangeLog
+}

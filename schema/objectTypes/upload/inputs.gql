@@ -1,0 +1,13 @@
+input uploadInput {
+    name: String!
+    size: Float!
+    type: String!
+    folder: String!
+    file: String!
+    isThumb: Boolean
+}
+input checkUploadInput {
+    name: String!
+    size: Float!
+    type: String!
+}

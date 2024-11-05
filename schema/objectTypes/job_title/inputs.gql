@@ -1,0 +1,9 @@
+input CreateJobTitle {
+    jobArea:ID!
+    name: String!
+}
+
+input UpdateJobTitle {
+    _id: ID!
+    name: String!
+}

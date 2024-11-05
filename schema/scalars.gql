@@ -1,0 +1,24 @@
+"""
+-type String
+"""
+scalar GeoAddress
+"""
+-type Float
+"""
+scalar Latitude
+"""
+-type Float
+"""
+scalar Longitude
+"""
+-type Int
+"""
+scalar DateTime
+"""
+-type String
+"""
+scalar Email
+"""
+-type String
+"""
+scalar PhoneNumber

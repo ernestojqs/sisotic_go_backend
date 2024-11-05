@@ -1,0 +1,9 @@
+input CreateTask {
+    _id:ID!
+    description: String!
+}
+
+input UpdateTask {
+    _id:ID!
+    description: String!
+}

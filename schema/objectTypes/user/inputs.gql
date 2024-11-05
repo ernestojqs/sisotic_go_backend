@@ -1,0 +1,30 @@
+input CreateUser {
+    firstName:String!
+    lastName:String!
+    email: Email!
+    phoneNumber:PhoneNumber
+    jobTitle:ID
+    password: String!
+}
+
+input UpdateUser {
+    """
+    -type ID
+    """
+    _id:ID!
+    firstName:String
+    lastName:String
+    email: Email
+    phoneNumber:PhoneNumber
+    jobTitle:ID
+    password: String  
+}
+
+input ResetUserPassword {
+    """
+    -type ID
+    """
+    userID: ID!
+    password: String!
+}
+

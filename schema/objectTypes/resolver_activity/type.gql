@@ -1,0 +1,31 @@
+type ResolverActivity {
+    """
+    -type ID
+    """
+    _id:ID!
+    description:String!
+    recommendations:String
+    """
+    -type ID
+    """
+    resolverUser:User!
+    """
+    -created
+    """
+    created:DateTime
+    """
+    -updated
+    """
+    updated:DateTime
+}
+
+type EdgeResolverActivity {
+    """
+    -bsonOmmit
+    """
+    edges:[ResolverActivity]
+    """
+    -bsonOmmit
+    """
+    pageInfo:PageInfo
+}

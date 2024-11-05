@@ -1,0 +1,5 @@
+input LoginInput {
+    email: Email
+    phoneNumber: PhoneNumber
+    password: String!
+}

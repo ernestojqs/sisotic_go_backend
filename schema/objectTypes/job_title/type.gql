@@ -1,0 +1,27 @@
+type JobTitle {
+    """
+    -type ID
+    """
+    _id:ID!
+    name:String!
+    """
+    -created
+    """
+    created:DateTime
+    """
+    -updated
+    """
+    updated:DateTime
+}
+
+
+type EdgeJobTitle {
+    """
+    -bsonOmmit
+    """
+    edges:[JobTitle]
+    """
+    -bsonOmmit
+    """
+    pageInfo:PageInfo
+}

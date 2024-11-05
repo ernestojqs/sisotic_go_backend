@@ -1,0 +1,8 @@
+input CreateCollegeDependency{
+    name:String!
+}
+
+input UpdateCollegeDependency{
+    _id:ID!
+    name:String!
+}

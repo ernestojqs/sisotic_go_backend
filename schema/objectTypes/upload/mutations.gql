@@ -1,0 +1,10 @@
+extend type Mutation {
+    """
+    -auth admin, user
+    """
+    upload(input: uploadInput): Upload!
+    """
+    -auth admin, user
+    """
+    cancelUpload(input: checkUploadInput): Upload
+}
