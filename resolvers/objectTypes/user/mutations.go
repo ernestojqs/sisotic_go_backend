@@ -28,7 +28,7 @@ func (o *User) validateUniqueField(m map[string]any, userID any) (err definition
 	errr := map[string]definitionError.ErrorDescriptor{"email": gqlErrors.ERROR_EMAIL_EXISTS, "phoneNumber": gqlErrors.ERROR_PHONE_NUMBER_EXISTS}
 	for key, value := range m {
 		if value != nil && value.(string) != "" {
-			usersWhere := bson.M{"email": value.(string)}
+			usersWhere := bson.M{key: value.(string)}
 			if userID != nil {
 				usersWhere["_id"] = bson.M{"$ne": userID.(primitive.ObjectID)}
 			}
@@ -46,7 +46,7 @@ func (o *User) validateUniqueField(m map[string]any, userID any) (err definition
 func (o *User) createUserMutation(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 	input := info.Args["input"].(map[string]any)
 	dbUsers, _ := o.model.Count(nil, nil)
-	input["role"] = enums.ROLEENUM_ADMIN
+	input["role"] = string(enums.ROLEENUM_ADMIN)
 	if dbUsers > 0 {
 		input["role"] = enums.ROLEENUM_USER
 		if err = o.validateUniqueField(map[string]any{"email": input["email"].(string), "phoneNumber": input["phoneNumber"]}, nil); err != nil {

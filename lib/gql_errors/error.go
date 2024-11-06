@@ -62,6 +62,7 @@ var (
 	ERROR_PASSWORD_NOT_ENCRYPTED                  = definitionError.ErrorDescriptor{Code: "049", Message: "Failed to generate hashed password", Level: definitionError.LEVEL_FATAL}
 	ERROR_CANNOT_COMPARE_PASSWORDS                = definitionError.ErrorDescriptor{Code: "050", Message: "Passwords could not be compared", Level: definitionError.LEVEL_FATAL}
 	ERROR_PASSWORD_NOT_MATCH                      = definitionError.ErrorDescriptor{Code: "051", Message: "Password does not match", Level: definitionError.LEVEL_FATAL}
+	ERROR_MANY_LOGIN_VALUES                       = definitionError.ErrorDescriptor{Code: "051", Message: "Use email or phone number, not both", Level: definitionError.LEVEL_FATAL}
 	ERROR_EMAIL_EXISTS                            = definitionError.ErrorDescriptor{Code: "052", Message: "Email is not available", Level: definitionError.LEVEL_FATAL}
 	ERROR_PHONE_NUMBER_EXISTS                     = definitionError.ErrorDescriptor{Code: "053", Message: "Phone number is not available", Level: definitionError.LEVEL_FATAL}
 	ERROR_INSERT_VERIFICATION_CODE_IN_DB          = definitionError.ErrorDescriptor{Code: "054", Message: "Error when trying to create verification code in database", Level: definitionError.LEVEL_FATAL}

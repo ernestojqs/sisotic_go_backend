@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/google/uuid"
 	"github.com/pjmd89/goutils/systemutils"
 )
 
@@ -19,6 +20,20 @@ func GenerateToken(length int) (token string) {
 		digits[i] = n.String()
 	}
 	token = strings.Join(digits, "")
+
+	return
+}
+
+func GenerateTokenFromUUID(lenght int, escapeHyphen bool) (token string) {
+	uuidToken := uuid.New()
+	token = uuidToken.String()
+
+	if escapeHyphen {
+		token = strings.ReplaceAll(token, "-", "")
+	}
+	if lenght >= 4 && lenght <= len(token) {
+		token = token[:lenght]
+	}
 
 	return
 }

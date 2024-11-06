@@ -20,33 +20,37 @@ import (
 )
 
 type Device struct {
-	model models.Device
+	model                   models.Device
+	resolverActivityModel   models.ResolverActivity
+	technicalDiagnosisModel models.TechnicalDiagnosis
+	collegeDependencyModel  models.CollegeDependency
 }
 
 func NewDevice(db dbutils.DBInterface) (o resolvers.ObjectTypeInterface) {
 	o = &Device{
-		model: models.Device{},
+		model:                   models.Device{},
+		resolverActivityModel:   models.ResolverActivity{},
+		technicalDiagnosisModel: models.TechnicalDiagnosis{},
+		collegeDependencyModel:  models.CollegeDependency{},
 	}
 	o.(*Device).model.Init(models.Device{}, db)
+	o.(*Device).resolverActivityModel.Init(models.ResolverActivity{}, db)
+	o.(*Device).technicalDiagnosisModel.Init(models.TechnicalDiagnosis{}, db)
+	o.(*Device).collegeDependencyModel.Init(models.CollegeDependency{}, db)
 	return o
 }
 func (o *Device) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 	switch info.Operation {
 	case "query":
-		break
 	case "mutation":
 		switch info.Resolver {
 		case "createDevices":
 			r, err = o.createDevicesMutation(info)
-			break
 		case "updateDevice":
 			r, err = o.updateDeviceMutation(info)
-			break
 		case "deleteDevice":
 			r, err = o.deleteDeviceMutation(info)
-			break
 		}
-		break
 	}
 	return
 }

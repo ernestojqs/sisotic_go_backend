@@ -3,7 +3,8 @@ module otic
 go 1.23.1
 
 require (
-	github.com/pjmd89/gogql v0.14.0
+	github.com/google/uuid v1.6.0
+	github.com/pjmd89/gogql v0.13.2
 	github.com/pjmd89/goutils v1.2.0
 	github.com/pjmd89/gqlparser/v2 v2.2.1-0.20220330002356-e1babba1695a
 	github.com/pjmd89/mongomodel v0.0.0-20230713001728-d352a7135002
@@ -15,7 +16,6 @@ require (
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/felixge/httpsnoop v1.0.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/handlers v1.5.1 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect

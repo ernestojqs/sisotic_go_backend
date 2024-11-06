@@ -16,6 +16,7 @@ import (
 
 	"otic/lib"
 	"otic/lib/generateauth"
+	"otic/lib/utils"
 	"otic/resolvers/directives"
 	"otic/resolvers/objectTypes/changelog"
 	"otic/resolvers/objectTypes/collegedependency"
@@ -69,6 +70,7 @@ var restfull = rest.Init()
 var myHttp = http.Init(logs, myConfig.HTTPConfigFile).SetGql(schema).SetRest(restfull)
 
 func main() {
+	utils.Argon2 = systemutils.NewArgon2()
 	lib.MyConfig = myConfig
 	lib.Logs = logs
 	systemLog.Info().Println("debugmode: ", debugmode.Enabled)

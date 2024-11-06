@@ -50,6 +50,8 @@ func (o *JobTitle) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn
 			r, err = o.updateJobTitleMutation(info)
 		case "jobTitle":
 			r, err = o.jobTitle(info)
+		case "edges":
+			r, err = o.edges(info)
 		}
 	}
 	return

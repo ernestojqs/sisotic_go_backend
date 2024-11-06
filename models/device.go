@@ -32,7 +32,7 @@ type Device struct {
 	SerialCode         string                  `bson:"serialCode" gql:"name=serialCode"`
 	Type               string                  `bson:"type" gql:"name=type"`
 	Modell             string                  `bson:"model" gql:"name=model"`
-	GroupID            string                  `bson:"groupID" gql:"name=groupID,objectID=true"`
+	GroupID            string                  `bson:"groupID" gql:"name=groupID"`
 	Observations       []primitive.ObjectID    `bson:"observations" gql:"name=observations"`
 	TransferEvidences  []primitive.ObjectID    `bson:"transferEvidences" gql:"name=transferEvidences"`
 	ReceiverUser       primitive.ObjectID      `bson:"receiverUser" gql:"name=receiverUser,objectID=true"`

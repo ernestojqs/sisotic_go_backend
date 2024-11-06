@@ -5,6 +5,6 @@ input CreateResolverActivity {
 }
 
 input CreateLocalResolverActivity {
-    description:String
+    description:String!
     recommendations:String
 }

@@ -32,8 +32,8 @@ func (o *Logged) loginQuery(info resolvers.ResolverInfo) (r resolvers.DataReturn
 	}
 	userWhere := map[string]any{}
 	if (input["phoneNumber"] == nil && input["email"] == nil) || ((input["phoneNumber"] != nil && input["phoneNumber"].(string) != "") && (input["email"] != nil && input["email"].(string) != "")) {
-		lib.Logs.System.Warning().Println(gqlErrors.ERROR_PASSWORD_NOT_MATCH)
-		err = definitionError.NewError(gqlErrors.ERROR_PASSWORD_NOT_MATCH, nil)
+		lib.Logs.System.Warning().Println(gqlErrors.ERROR_MANY_LOGIN_VALUES)
+		err = definitionError.NewError(gqlErrors.ERROR_MANY_LOGIN_VALUES, nil)
 		return
 	}
 

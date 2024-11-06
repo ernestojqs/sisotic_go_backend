@@ -13,7 +13,7 @@ type Device {
     serialCode:String
     type:String
     model:String
-    groupID:ID
+    groupID:String
     observations:[Observation]
     transferEvidences:[TransferEvidence]
     """

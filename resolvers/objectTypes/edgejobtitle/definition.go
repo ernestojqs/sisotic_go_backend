@@ -34,12 +34,12 @@ func (o *EdgeJobTitle) Resolver(info resolvers.ResolverInfo) (r resolvers.DataRe
 	switch info.Operation {
 	case "query":
 		switch info.Resolver {
-		case "getJobTitles":
+		case "getJobTitles", "jobTitles":
 			r, err = o.getJobTitlesQuery(info)
 		}
 	case "mutation":
 		switch info.Resolver {
-		case "getJobTitles":
+		case "jobTitles":
 			r, err = o.getJobTitlesQuery(info)
 		}
 	}

@@ -1,11 +1,11 @@
 input CreateDevice {
    transferEvidence: SetDeviceTransferEvidence
-   deviceInfo: DeviceInfo
+   collegeDependency:ID!
+   deviceInfo: [CreateDeviceInfo!]!
 }
 
-input DeviceInfo {
+input CreateDeviceInfo {
    placeOfCare:PlaceOfCareEnum!
-   collegeDependency:ID!
    isSupport:Boolean!
    assetCode:String
    serialCode:String
@@ -17,7 +17,6 @@ input DeviceInfo {
    -must set this if the place of care is local
    """
    localTechnicalDiagnosis:[CreateTechnicalDiagnosis!]
-
 }
 
 input UpdateDevice {  
@@ -25,6 +24,13 @@ input UpdateDevice {
    -type ID
    """
    _id: ID!
-   deviceInfo: DeviceInfo
+   collegeDependency: ID
    transferEvidence:SetDeviceTransferEvidence
+   assetCode:String
+   serialCode:String
+   type:String
+   model:String
+   #groupID:ID
+   observations:[SetDeviceObservationInput!]
+   supportStatus:SupportStatusEnum
 }
