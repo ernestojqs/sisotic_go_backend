@@ -7,7 +7,7 @@ type JobArea {
     """
     -type [ID]
     """
-    jobTitles: [JobTitle]
+    jobTitles: EdgeJobTitle
     """
     -created
     """

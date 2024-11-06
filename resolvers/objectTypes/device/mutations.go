@@ -21,6 +21,7 @@ func (o *Device) createDevicesMutation(info resolvers.ResolverInfo) (r resolvers
 
 	return
 }
+
 func (o *Device) updateDeviceMutation(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 
 	return
