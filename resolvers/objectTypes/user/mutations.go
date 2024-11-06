@@ -48,6 +48,12 @@ func (o *User) createUserMutation(info resolvers.ResolverInfo) (r resolvers.Data
 	dbUsers, _ := o.model.Count(nil, nil)
 	input["role"] = string(enums.ROLEENUM_ADMIN)
 	if dbUsers > 0 {
+		// sess, rerr := utils.GetSession(info.SessionID)
+		// if rerr != nil || sess.UserRole != string(enums.ROLEENUM_ADMIN) {
+		// 	lib.Logs.System.Warning().Println(gqlErrors.ERROR_ACCESS_DENIED)
+		// 	err = definitionError.NewError(gqlErrors.ERROR_ACCESS_DENIED, nil)
+		// 	return
+		// }
 		input["role"] = enums.ROLEENUM_USER
 		if err = o.validateUniqueField(map[string]any{"email": input["email"].(string), "phoneNumber": input["phoneNumber"]}, nil); err != nil {
 			return
@@ -62,6 +68,14 @@ func (o *User) createUserMutation(info resolvers.ResolverInfo) (r resolvers.Data
 		}
 	}
 	if input["password"], err = o.hashPassword(input["password"].(string)); err != nil {
+		return
+	}
+
+	verificationCodeWhere := map[string]any{"email": input["email"].(string), "wasVerified": true}
+	verificationCode, _ := o.verificationCodeModel.Read(verificationCodeWhere, nil)
+	if len(verificationCode.([]models.VerificationCode)) == 0 {
+		lib.Logs.System.Fatal().Println(gqlErrors.ERROR_EMAIL_IS_NOT_VERIFIED)
+		err = definitionError.NewError(gqlErrors.ERROR_EMAIL_IS_NOT_VERIFIED, nil)
 		return
 	}
 
@@ -141,6 +155,29 @@ func (o *User) deleteUserMutation(info resolvers.ResolverInfo) (r resolvers.Data
 	return
 }
 func (o *User) resetUserPasswordMutation(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
+	inputID := info.Args["input"].(map[string]any)["userID"].(primitive.ObjectID)
+	inputPassword := info.Args["input"].(map[string]any)["password"]
+
+	where := map[string]any{"_id": inputID}
+	user, _ := o.model.Read(where, nil)
+	if len(user.([]models.User)) == 0 {
+		lib.Logs.System.Fatal().Println(gqlErrors.ERROR_QUERY_USER_IN_DB)
+		err = definitionError.NewError(gqlErrors.ERROR_QUERY_USER_IN_DB, nil)
+		return
+	}
+
+	newHashedPassword, hashErr := o.hashPassword(inputPassword.(string))
+	if hashErr != nil {
+		err = hashErr
+		return
+	}
+
+	input := map[string]any{"password": newHashedPassword}
+	r, rerr := o.model.Update(input, where, nil)
+	if rerr != nil {
+		lib.Logs.System.Fatal().Println(rerr.Error())
+		err = definitionError.NewError(gqlErrors.ERROR_UPDATE_USER_IN_DB, definitionError.ExtensionError{"DB error": rerr.Error()})
+	}
 
 	return
 }

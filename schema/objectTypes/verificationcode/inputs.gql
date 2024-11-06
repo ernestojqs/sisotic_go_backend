@@ -1,12 +1,10 @@
-input VerifyCode{
+input VerifyCode {
     email: Email!
     submittedCode: String!
-    isEmailVerification: Boolean
+    isResetPassword: Boolean
 }
 
-
-input UpdateVerifyCode {
-    email: Email! 
-    isResetPassword: Boolean
+input SendVerificationCode {
+    email: Email!
 }
 

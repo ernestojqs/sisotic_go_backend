@@ -13,9 +13,11 @@ package main
 
 import (
 	"embed"
+	"slices"
 
 	"otic/lib"
 	"otic/lib/generateauth"
+	gqlErrors "otic/lib/gql_errors"
 	"otic/lib/utils"
 	"otic/resolvers/directives"
 	"otic/resolvers/objectTypes/changelog"
@@ -100,16 +102,21 @@ func OnIntrospection() (err definitionError.GQLError) {
 func OnAuthorizate(authInfo gql.AuthorizateInfo) (err definitionError.GQLError) {
 	//El el rol puede venir de una variable de sesion
 	//La sesion debes definirla de manera que se adapte a tu necesidad
-	/*
-		if len(lib.Auth[authInfo.SrcType]) > 0 &&
-			len(lib.Auth[authInfo.SrcType][authInfo.DstType]) > 0 &&
-			len(lib.Auth[authInfo.SrcType][authInfo.DstType][authInfo.Resolver]) > 0 {
+	access, isIn := lib.Auth[authInfo.SrcType][authInfo.DstType][authInfo.Resolver]
+	if !isIn {
+		return
+	}
+	session, err := utils.GetSession(authInfo.SessionID)
+	if err != nil {
+		return
+	}
 
-			if !slices.Contains(lib.Auth[authInfo.SrcType][authInfo.DstType][authInfo.Resolver], "yourRol") {
-				err = definitionError.NewFatal("this rol not have permissions.", nil)
-			}
-		}
-	*/
+	if !slices.Contains(access, session.UserRole) {
+		lib.Logs.System.Warning().Println(gqlErrors.ERROR_ACCESS_DENIED)
+		err = definitionError.NewError(gqlErrors.ERROR_ACCESS_DENIED, nil)
+		return
+	}
+
 	return
 }
 func init() {

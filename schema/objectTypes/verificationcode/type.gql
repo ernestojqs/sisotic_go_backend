@@ -1,3 +1,4 @@
 type VerificationCode{
     user: User
+    wasVerified: Boolean
 }

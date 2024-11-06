@@ -36,16 +36,12 @@ func (o *VerificationCode) Resolver(info resolvers.ResolverInfo) (r resolvers.Da
 		switch info.Resolver {
 		case "verifyCode":
 			r, err = o.verifyCodeQuery(info)
-			break
 		}
-		break
 	case "mutation":
 		switch info.Resolver {
-		case "updateVerifyCode":
-			r, err = o.updateVerifyCodeMutation(info)
-			break
+		case "sendVerificationCode":
+			r, err = o.sendVerificationCodeMutation(info)
 		}
-		break
 	}
 	return
 }

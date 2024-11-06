@@ -24,6 +24,7 @@ import (
 )
 
 func (o *Device) createDevicesMutation(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
+	sess, _ := utils.GetSession(info.SessionID)
 	input := info.Args["input"].(map[string]any)
 	r = []models.Device{}
 	collegeDependencyID := input["collegeDependency"].(primitive.ObjectID)
@@ -32,6 +33,7 @@ func (o *Device) createDevicesMutation(info resolvers.ResolverInfo) (r resolvers
 	}
 	for _, v := range input["deviceInfo"].([]any) {
 		value := v.(map[string]any)
+		value["receiverUser"] = sess.UserID
 		value["groupID"] = utils.GenerateTokenFromUUID(12, true)
 		value["collegeDependency"] = collegeDependencyID
 		deviceInfo := value["deviceInfo"].(map[string]any)

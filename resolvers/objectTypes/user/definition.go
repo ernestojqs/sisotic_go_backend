@@ -20,17 +20,20 @@ import (
 )
 
 type User struct {
-	model         models.User
-	jobTitleModel models.JobTitle
+	model                 models.User
+	jobTitleModel         models.JobTitle
+	verificationCodeModel models.VerificationCode
 }
 
 func NewUser(db dbutils.DBInterface) (o resolvers.ObjectTypeInterface) {
 	o = &User{
-		model:         models.User{},
-		jobTitleModel: models.JobTitle{},
+		model:                 models.User{},
+		jobTitleModel:         models.JobTitle{},
+		verificationCodeModel: models.VerificationCode{},
 	}
 	o.(*User).model.Init(models.User{}, db)
 	o.(*User).jobTitleModel.Init(models.JobTitle{}, db)
+	o.(*User).verificationCodeModel.Init(models.VerificationCode{}, db)
 	return o
 }
 func (o *User) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
