@@ -34,6 +34,7 @@ import (
 	"otic/resolvers/objectTypes/jobarea"
 	"otic/resolvers/objectTypes/jobtitle"
 	"otic/resolvers/objectTypes/logged"
+	"otic/resolvers/objectTypes/module"
 	"otic/resolvers/objectTypes/observation"
 	"otic/resolvers/objectTypes/pageinfo"
 	"otic/resolvers/objectTypes/resolveractivity"
@@ -152,6 +153,7 @@ func init() {
 	schema.ObjectType("EdgeTechnicalDiagnosis", edgetechnicaldiagnosis.NewEdgeTechnicalDiagnosis(db))
 	schema.ObjectType("JobArea", jobarea.NewJobArea(db))
 	schema.ObjectType("EdgeResolverActivity", edgeresolveractivity.NewEdgeResolverActivity(db))
+	schema.ObjectType("Module", module.NewModule(db))
 	schema.Scalar("Email", scalars.NewEmailScalar())
 	schema.Scalar("PhoneNumber", scalars.NewPhoneNumberScalar())
 	schema.Scalar("DateTime", scalars.NewDateTimeScalar())

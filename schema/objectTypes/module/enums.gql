@@ -8,7 +8,7 @@ enum OperationEnum {
 enum ModuleNameEnum {
     collegeDependency
     device
-    jobArena
+    jobArea
     jobTitle
     resolverActivity
     task

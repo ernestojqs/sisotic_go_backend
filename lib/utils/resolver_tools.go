@@ -3,6 +3,7 @@ package utils
 import (
 	"crypto/rand"
 	"math/big"
+	"otic/resolvers/scalars"
 	"reflect"
 	"strings"
 
@@ -58,5 +59,42 @@ func GetGqlField(gqlTagName string, obj any) (fieldValue any) {
 		}
 	}
 
+	return
+}
+
+func ParseArayDBObj(obj any) (parsedArrayObj []any) {
+	if reflect.TypeOf(obj).Kind() != reflect.Slice {
+		return
+	}
+
+	value := reflect.ValueOf(obj)
+	for i := 0; i < value.Len(); i++ {
+		parsedArrayObj = append(parsedArrayObj, ParseDBObj(value.Index(i)))
+	}
+
+	return
+}
+
+func ParseDBObj(obj any) (parsedObj any) {
+	if obj == nil {
+		return
+	}
+
+	mapObj := map[string]interface{}{}
+	for i := 0; i < reflect.TypeOf(obj).NumField(); i++ {
+		fieldName := reflect.TypeOf(obj).Field(i).Name
+		fieldName = strings.ToLower(string(fieldName[0])) + fieldName[1:]
+		fieldValue := reflect.ValueOf(obj).Field(i).Interface()
+		switch val := fieldValue.(type) {
+		case scalars.DateTime:
+			mapObj[fieldName] = int64(val)
+		default:
+			if reflect.TypeOf(val).Kind() == reflect.Struct {
+				val = ParseDBObj(val)
+			}
+			mapObj[fieldName] = val
+		}
+	}
+	parsedObj = mapObj
 	return
 }

@@ -139,7 +139,7 @@ func (o *User) updateUserMutation(info resolvers.ResolverInfo) (r resolvers.Data
 			return
 		}
 	}
-
+	input["permissions"] = utils.ParseArayDBObj(user.([]models.User)[0].Permissions)
 	result, rerr := o.model.Update(input, userWhere, nil)
 	if rerr != nil {
 		lib.Logs.System.Warning().Println(rerr.Error())
@@ -205,7 +205,7 @@ func (o *User) resetUserPasswordMutation(info resolvers.ResolverInfo) (r resolve
 		return
 	}
 
-	input := map[string]any{"password": newHashedPassword}
+	input := map[string]any{"password": newHashedPassword, "failedLogins": int64(0), "isLocked": false, "permissions": utils.ParseArayDBObj(user.([]models.User)[0].Permissions)}
 	r, rerr := o.model.Update(input, where, nil)
 	if rerr != nil {
 		lib.Logs.System.Fatal().Println(rerr.Error())

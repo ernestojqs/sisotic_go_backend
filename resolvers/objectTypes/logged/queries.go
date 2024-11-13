@@ -30,7 +30,7 @@ func (o *Logged) loginQuery(info resolvers.ResolverInfo) (r resolvers.DataReturn
 		r, _ = utils.GetSession(info.SessionID)
 		return
 	}
-	userWhere := map[string]any{}
+	userWhere := map[string]any{"isLocked": false}
 	if (input["phoneNumber"] == nil && input["email"] == nil) || ((input["phoneNumber"] != nil && input["phoneNumber"].(string) != "") && (input["email"] != nil && input["email"].(string) != "")) {
 		lib.Logs.System.Warning().Println(gqlErrors.ERROR_MANY_LOGIN_VALUES)
 		err = definitionError.NewError(gqlErrors.ERROR_MANY_LOGIN_VALUES, nil)
@@ -57,11 +57,21 @@ func (o *Logged) loginQuery(info resolvers.ResolverInfo) (r resolvers.DataReturn
 		return
 	}
 
+	inputUser := map[string]any{"failedLogins": int64(0), "permissions": utils.ParseArayDBObj(signedUpUser.Permissions)}
 	if !isEqual {
-		lib.Logs.System.Warning().Println(gqlErrors.ERROR_PASSWORD_NOT_MATCH)
-		err = definitionError.NewError(gqlErrors.ERROR_PASSWORD_NOT_MATCH, nil)
+		errr := gqlErrors.ERROR_PASSWORD_NOT_MATCH
+		failedLogins := signedUpUser.FailedLogins + 1
+		inputUser["failedLogins"] = int64(failedLogins)
+		if failedLogins == 3 {
+			inputUser["isLocked"] = true
+			errr = gqlErrors.ERROR_USER_ACCOUNT_BLOCKED
+		}
+		o.userModel.Update(inputUser, userWhere, nil)
+		lib.Logs.System.Warning().Println(errr)
+		err = definitionError.NewError(errr, nil)
 		return
 	}
+	o.userModel.Update(inputUser, userWhere, nil)
 
 	sess := utils.Session{
 		UserID:   signedUpUser.Id,

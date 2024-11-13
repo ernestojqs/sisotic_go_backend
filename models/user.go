@@ -32,11 +32,8 @@ type User struct {
 	Role             string             `bson:"role" gql:"name=role"`
 	Password         string             `bson:"password" gql:"name=password"`
 	Permissions      []Module           `bson:"permissions" gql:"name=permissions"`
+	FailedLogins     int64              `bson:"failedLogins" gql:"name=failedLogins"`
+	IsLocked         bool               `bson:"isLocked" gql:"name=isLocked"`
 	Created          scalars.DateTime   `bson:"created" gql:"name=created,created=true"`
 	Updated          scalars.DateTime   `bson:"updated" gql:"name=updated,updated=true"`
-}
-
-type Module struct {
-	Name       string   `bson:"name" gql:"name=name"`
-	Operations []string `bson:"operations" gql:"name=operations"`
 }
