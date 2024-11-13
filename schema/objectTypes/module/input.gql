@@ -1,0 +1,4 @@
+input SetModulePermissions {
+    name: ModuleNameEnum
+    operations: [OperationEnum]
+}

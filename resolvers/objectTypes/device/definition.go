@@ -42,6 +42,10 @@ func NewDevice(db dbutils.DBInterface) (o resolvers.ObjectTypeInterface) {
 func (o *Device) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 	switch info.Operation {
 	case "query":
+		switch info.Resolver {
+		case "edges":
+			r, err = o.createDevicesMutation(info)
+		}
 	case "mutation":
 		switch info.Resolver {
 		case "createDevices":

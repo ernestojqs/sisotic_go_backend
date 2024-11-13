@@ -1,0 +1,17 @@
+enum OperationEnum {
+    create
+    read
+    update
+    delete
+}
+
+enum ModuleNameEnum {
+    collegeDependency
+    device
+    jobArena
+    jobTitle
+    resolverActivity
+    task
+    technicalDiagnosis
+    user
+}

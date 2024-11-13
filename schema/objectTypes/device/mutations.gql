@@ -2,7 +2,7 @@ extend type Mutation{
     """
     -auth admin, user
     """
-    createDevices(input: [CreateDevice]): [Device]
+    createDevices(input: CreateDevice): [Device]
     """
     -auth admin, user
     """

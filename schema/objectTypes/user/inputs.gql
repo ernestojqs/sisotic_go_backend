@@ -28,3 +28,8 @@ input ResetUserPassword {
     password: String!
 }
 
+
+input PermissionsInput {
+    userID: ID!
+    permissions: [SetModulePermissions]
+}

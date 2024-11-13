@@ -31,6 +31,12 @@ type User struct {
 	JobTitle         primitive.ObjectID `bson:"jobTitle" gql:"name=jobTitle,objectID=true"`
 	Role             string             `bson:"role" gql:"name=role"`
 	Password         string             `bson:"password" gql:"name=password"`
+	Permissions      []Module           `bson:"permissions" gql:"name=permissions"`
 	Created          scalars.DateTime   `bson:"created" gql:"name=created,created=true"`
 	Updated          scalars.DateTime   `bson:"updated" gql:"name=updated,updated=true"`
+}
+
+type Module struct {
+	Name       string   `bson:"name" gql:"name=name"`
+	Operations []string `bson:"operations" gql:"name=operations"`
 }

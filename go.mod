@@ -4,7 +4,7 @@ go 1.23.1
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/pjmd89/gogql v0.13.2
+	github.com/pjmd89/gogql v0.15.1
 	github.com/pjmd89/goutils v1.2.0
 	github.com/pjmd89/gqlparser/v2 v2.2.1-0.20220330002356-e1babba1695a
 	github.com/pjmd89/mongomodel v0.0.0-20230713001728-d352a7135002

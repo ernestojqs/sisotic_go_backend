@@ -84,6 +84,7 @@ func (o *User) createUserMutation(info resolvers.ResolverInfo) (r resolvers.Data
 		lib.Logs.System.Warning().Println(rerr.Error())
 		err = definitionError.NewError(gqlErrors.ERROR_INSERT_USER_IN_DB, definitionError.ExtensionError{"DB error": rerr.Error()})
 	}
+	o.verificationCodeModel.Update(map[string]any{"user": r.(models.User).Id}, verificationCodeWhere, nil)
 
 	return
 }
@@ -150,6 +151,38 @@ func (o *User) updateUserMutation(info resolvers.ResolverInfo) (r resolvers.Data
 
 	return
 }
+
+func (o *User) assignPermissions(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
+	input := info.Args["input"].(map[string]any)
+	userWhere := map[string]any{"_id": input["userID"].(primitive.ObjectID)}
+	user, rerr := o.model.Read(userWhere, nil)
+	if rerr != nil || len(user.([]models.User)) == 0 {
+		lib.Logs.System.Warning().Println(gqlErrors.ERROR_QUERY_USER_IN_DB)
+		err = definitionError.NewError(gqlErrors.ERROR_QUERY_USER_IN_DB, nil)
+		return
+	}
+
+	for _, v := range input["permissions"].([]any) {
+		permissionMap := v.(map[string]any)
+		var operationStr []string
+		for _, operation := range permissionMap["operations"].([]any) {
+			operationStr = append(operationStr, operation.(string))
+		}
+		permissionMap["operations"] = operationStr
+	}
+
+	result, rerr := o.model.Update(input, userWhere, nil)
+	if rerr != nil {
+		lib.Logs.System.Warning().Println(rerr.Error())
+		err = definitionError.NewError(gqlErrors.ERROR_UPDATE_USER_IN_DB, definitionError.ExtensionError{"DB error": rerr.Error()})
+		return
+	}
+
+	r = result.([]models.User)[0]
+
+	return
+}
+
 func (o *User) deleteUserMutation(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 
 	return

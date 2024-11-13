@@ -2,10 +2,10 @@ input CreateDevice {
    transferEvidence: SetDeviceTransferEvidence
    collegeDependency:ID!
    deviceInfo: [CreateDeviceInfo!]!
+   placeOfCare:PlaceOfCareEnum!
 }
 
 input CreateDeviceInfo {
-   placeOfCare:PlaceOfCareEnum!
    isSupport:Boolean!
    assetCode:String
    serialCode:String

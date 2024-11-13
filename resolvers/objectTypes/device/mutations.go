@@ -32,46 +32,53 @@ func (o *Device) createDevicesMutation(info resolvers.ResolverInfo) (r resolvers
 		return
 	}
 	for _, v := range input["deviceInfo"].([]any) {
-		value := v.(map[string]any)
-		value["receiverUser"] = sess.UserID
-		value["groupID"] = utils.GenerateTokenFromUUID(12, true)
-		value["collegeDependency"] = collegeDependencyID
-		deviceInfo := value["deviceInfo"].(map[string]any)
-		if deviceInfo["placeOfCare"] == enums.PLACEOFCAREENUM_LOCAL {
+		deviceInfo := v.(map[string]any)
+		deviceInfo["receiverUser"] = sess.UserID
+		deviceInfo["groupID"] = utils.GenerateTokenFromUUID(12, true)
+		deviceInfo["collegeDependency"] = collegeDependencyID
+		deviceInfo["placeOfCare"] = input["placeOfCare"].(string)
+		deviceInfo["supportStatus"] = string(enums.SUPPORTSTATUSENUM_DELIVERED)
+		if deviceInfo["placeOfCare"].(string) == string(enums.PLACEOFCAREENUM_LOCAL) {
 			if deviceInfo["isSupport"] == true && ((deviceInfo["localTechnicalDiagnosis"] == nil) || (deviceInfo["localTechnicalDiagnosis"] != nil && len(deviceInfo["localTechnicalDiagnosis"].([]any)) == 0)) {
-				//errorr
+				lib.Logs.System.Warning().Println(gqlErrors.ERROR_TECHNICAL_DIAGNOSIS_REQUERIDED)
+				err = definitionError.NewError(gqlErrors.ERROR_TECHNICAL_DIAGNOSIS_REQUERIDED, nil)
+				return
 			}
 			var techDiagnosisIDs []primitive.ObjectID
 			for _, v := range deviceInfo["localTechnicalDiagnosis"].([]any) {
 				techDiagnosis := v.(map[string]any)
 				if (techDiagnosis["localResolverActivities"] == nil) || (techDiagnosis["localResolverActivities"] != nil && len(techDiagnosis["localResolverActivities"].([]any)) == 0) {
-					//error
+					lib.Logs.System.Warning().Println(gqlErrors.ERROR_TECHNICAL_DIAGNOSIS_REQUERIDED)
+					err = definitionError.NewError(gqlErrors.ERROR_TECHNICAL_DIAGNOSIS_REQUERIDED, nil)
+					return
 				}
 				var resolverActivityIDs []primitive.ObjectID
 				for _, v := range techDiagnosis["localResolverActivities"].([]any) {
 					resolverActivityInput := v.(map[string]any)
+					resolverActivityInput["resolverUser"] = sess.UserID
 					result, rerr := o.resolverActivityModel.Create(resolverActivityInput, nil)
 					if rerr != nil {
-						lib.Logs.System.Warning().Println(gqlErrors.ERROR_INSERT_JOB_TITLE_IN_DB)
-						err = definitionError.NewError(gqlErrors.ERROR_INSERT_JOB_TITLE_IN_DB, nil)
+						lib.Logs.System.Warning().Println(gqlErrors.ERROR_INSERT_RESOLVER_ACTIVITY_IN_DB)
+						err = definitionError.NewError(gqlErrors.ERROR_INSERT_RESOLVER_ACTIVITY_IN_DB, nil)
 						return
 					}
 					resolverActivityIDs = append(resolverActivityIDs, result.(models.ResolverActivity).Id)
 				}
 				techDiagnosis["resolverActivities"] = resolverActivityIDs
+				techDiagnosis["diagnosticUser"] = sess.UserID
 				createdDiagnosis, rerr := o.technicalDiagnosisModel.Create(techDiagnosis, nil)
 				if rerr != nil {
-					lib.Logs.System.Warning().Println(gqlErrors.ERROR_INSERT_JOB_TITLE_IN_DB)
-					err = definitionError.NewError(gqlErrors.ERROR_INSERT_JOB_TITLE_IN_DB, nil)
+					lib.Logs.System.Warning().Println(gqlErrors.ERROR_INSERT_TECHNICAL_DIAGNOSIS_IN_DB)
+					err = definitionError.NewError(gqlErrors.ERROR_INSERT_TECHNICAL_DIAGNOSIS_IN_DB, nil)
 					return
 				}
 				techDiagnosisIDs = append(techDiagnosisIDs, createdDiagnosis.(models.TechnicalDiagnosis).Id)
 			}
-			value["technicalDiagnosis"] = techDiagnosisIDs
-			device, rerr := o.model.Create(value, nil)
+			deviceInfo["technicalDiagnosis"] = techDiagnosisIDs
+			device, rerr := o.model.Create(deviceInfo, nil)
 			if rerr != nil {
-				lib.Logs.System.Warning().Println(gqlErrors.ERROR_INSERT_JOB_TITLE_IN_DB)
-				err = definitionError.NewError(gqlErrors.ERROR_INSERT_JOB_TITLE_IN_DB, nil)
+				lib.Logs.System.Warning().Println(gqlErrors.ERROR_INSERT_DEVICE_IN_DB)
+				err = definitionError.NewError(gqlErrors.ERROR_INSERT_DEVICE_IN_DB, nil)
 				return
 			}
 			r = append(r.([]models.Device), device.(models.Device))

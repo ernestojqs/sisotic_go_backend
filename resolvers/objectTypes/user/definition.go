@@ -55,6 +55,8 @@ func (o *User) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, er
 			r, err = o.deleteUserMutation(info)
 		case "resetUserPassword":
 			r, err = o.resetUserPasswordMutation(info)
+		case "assignPermissions":
+			r, err = o.assignPermissions(info)
 		case "user":
 			r, err = o.user(info)
 		}
