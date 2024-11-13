@@ -69,7 +69,7 @@ func ParseArayDBObj(obj any) (parsedArrayObj []any) {
 
 	value := reflect.ValueOf(obj)
 	for i := 0; i < value.Len(); i++ {
-		parsedArrayObj = append(parsedArrayObj, ParseDBObj(value.Index(i)))
+		parsedArrayObj = append(parsedArrayObj, ParseDBObj(value.Index(i).Interface()))
 	}
 
 	return
