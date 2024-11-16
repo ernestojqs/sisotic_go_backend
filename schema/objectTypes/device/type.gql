@@ -24,7 +24,8 @@ type Device {
     -type [ID]
     """
     technicalDiagnosis:[TechnicalDiagnosis]!
-    supportStatus:SupportStatusEnum
+    currentSupportStatus:SupportStatusEnum
+    supportStatusDetails: [StatusDetails]
     """
     -created
     """
@@ -44,4 +45,10 @@ type EdgeDevice {
     -bsonOmmit
     """
     pageInfo:PageInfo
+}
+
+type StatusDetails {
+    type: SupportStatusEnum
+    date: DateTime
+    recordUser: User
 }

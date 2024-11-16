@@ -14,15 +14,8 @@
  */
 package models
 
-import (
-	"otic/models/enums"
-
-	"github.com/pjmd89/mongomodel/mongomodel"
-)
-
 type TransferEvidence struct {
-	mongomodel.Model `bson:"-" gql:"omit=true"`
-	PhotoPath        string                 `bson:"photoPath" gql:"name=photoPath"`
-	TransferType     enums.TransferTypeEnum `bson:"transferType" gql:"name=transferType"`
-	Id_number        string                 `bson:"id_number" gql:"name=id_number"`
+	PhotoPath    string `bson:"photoPath" gql:"name=photoPath"`
+	TransferType string `bson:"transferType" gql:"name=transferType"`
+	Id_number    string `bson:"id_number" gql:"name=id_number"`
 }

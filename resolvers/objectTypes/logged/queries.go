@@ -30,7 +30,7 @@ func (o *Logged) loginQuery(info resolvers.ResolverInfo) (r resolvers.DataReturn
 		r, _ = utils.GetSession(info.SessionID)
 		return
 	}
-	userWhere := map[string]any{"isLocked": false}
+	userWhere := map[string]any{}
 	if (input["phoneNumber"] == nil && input["email"] == nil) || ((input["phoneNumber"] != nil && input["phoneNumber"].(string) != "") && (input["email"] != nil && input["email"].(string) != "")) {
 		lib.Logs.System.Warning().Println(gqlErrors.ERROR_MANY_LOGIN_VALUES)
 		err = definitionError.NewError(gqlErrors.ERROR_MANY_LOGIN_VALUES, nil)
@@ -47,6 +47,12 @@ func (o *Logged) loginQuery(info resolvers.ResolverInfo) (r resolvers.DataReturn
 
 	signedUpUser, err := o.readUser(userWhere)
 	if err != nil {
+		return
+	}
+
+	if signedUpUser.IsLocked {
+		lib.Logs.System.Warning().Println(gqlErrors.ERROR_ACCOUNT_BLOCKED_CONTACT_ADMIN)
+		err = definitionError.NewError(gqlErrors.ERROR_ACCOUNT_BLOCKED_CONTACT_ADMIN, nil)
 		return
 	}
 

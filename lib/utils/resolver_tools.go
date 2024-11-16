@@ -89,7 +89,8 @@ func ParseDBObj(obj any) (parsedObj any) {
 		case scalars.DateTime:
 			mapObj[fieldName] = int64(val)
 		default:
-			if reflect.TypeOf(val).Kind() == reflect.Struct {
+			typeOfValue := reflect.TypeOf(val)
+			if typeOfValue != nil && typeOfValue.Kind() == reflect.Struct {
 				val = ParseDBObj(val)
 			}
 			mapObj[fieldName] = val

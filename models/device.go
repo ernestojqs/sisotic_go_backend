@@ -23,21 +23,22 @@ import (
 )
 
 type Device struct {
-	mongomodel.Model   `bson:"-" gql:"omit=true"`
-	Id                 primitive.ObjectID      `bson:"_id,omitempty" gql:"name=_id,id=true,objectID=true"`
-	PlaceOfCare        enums.PlaceOfCareEnum   `bson:"placeOfCare" gql:"name=placeOfCare"`
-	CollegeDependency  primitive.ObjectID      `bson:"collegeDependency" gql:"name=collegeDependency,objectID=true"`
-	IsSupport          bool                    `bson:"isSupport" gql:"name=isSupport"`
-	AssetCode          string                  `bson:"assetCode" gql:"name=assetCode"`
-	SerialCode         string                  `bson:"serialCode" gql:"name=serialCode"`
-	Type               string                  `bson:"type" gql:"name=type"`
-	Modell             string                  `bson:"model" gql:"name=model"`
-	GroupID            string                  `bson:"groupID" gql:"name=groupID"`
-	Observations       []primitive.ObjectID    `bson:"observations" gql:"name=observations"`
-	TransferEvidences  []primitive.ObjectID    `bson:"transferEvidences" gql:"name=transferEvidences"`
-	ReceiverUser       primitive.ObjectID      `bson:"receiverUser" gql:"name=receiverUser,objectID=true"`
-	TechnicalDiagnosis []primitive.ObjectID    `bson:"technicalDiagnosis" gql:"name=technicalDiagnosis,objectID=true"`
-	SupportStatus      enums.SupportStatusEnum `bson:"supportStatus" gql:"name=supportStatus"`
-	Created            scalars.DateTime        `bson:"created" gql:"name=created,created=true"`
-	Updated            scalars.DateTime        `bson:"updated" gql:"name=updated,updated=true"`
+	mongomodel.Model     `bson:"-" gql:"omit=true"`
+	Id                   primitive.ObjectID      `bson:"_id,omitempty" gql:"name=_id,id=true,objectID=true"`
+	PlaceOfCare          enums.PlaceOfCareEnum   `bson:"placeOfCare" gql:"name=placeOfCare"`
+	CollegeDependency    primitive.ObjectID      `bson:"collegeDependency" gql:"name=collegeDependency,objectID=true"`
+	IsSupport            bool                    `bson:"isSupport" gql:"name=isSupport"`
+	AssetCode            string                  `bson:"assetCode" gql:"name=assetCode"`
+	SerialCode           string                  `bson:"serialCode" gql:"name=serialCode"`
+	Type                 string                  `bson:"type" gql:"name=type"`
+	Modell               string                  `bson:"model" gql:"name=model"`
+	GroupID              string                  `bson:"groupID" gql:"name=groupID"`
+	Observations         []Observation           `bson:"observations" gql:"name=observations"`
+	TransferEvidences    []TransferEvidence      `bson:"transferEvidences" gql:"name=transferEvidences"`
+	ReceiverUser         primitive.ObjectID      `bson:"receiverUser" gql:"name=receiverUser,objectID=true"`
+	TechnicalDiagnosis   []primitive.ObjectID    `bson:"technicalDiagnosis" gql:"name=technicalDiagnosis,objectID=true"`
+	CurrentSupportStatus enums.SupportStatusEnum `bson:"currentSupportStatus" gql:"name=currentSupportStatus"`
+	SupportStatusDetails []SupportStatusDetails  `bson:"supportStatusDetails" gql:"name=supportStatusDetails"`
+	Created              scalars.DateTime        `bson:"created" gql:"name=created,created=true"`
+	Updated              scalars.DateTime        `bson:"updated" gql:"name=updated,updated=true"`
 }

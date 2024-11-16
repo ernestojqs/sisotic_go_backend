@@ -9,36 +9,35 @@
  *
  * gqlgenerate no creara archivos en la carpeta raiz de tu modulo porque puedes sufrir perdida de informacion.
  */
-package observation
+package supportstatusdetails
 
 import (
 	"otic/models"
 
 	"github.com/pjmd89/gogql/lib/gql/definitionError"
 	"github.com/pjmd89/gogql/lib/resolvers"
-	"github.com/pjmd89/goutils/dbutils"
 )
 
-type Observation struct {
-	model models.Observation
+type SupportStatusDetails struct {
+	model models.SupportStatusDetails
 }
 
-func NewObservation(db dbutils.DBInterface) (o resolvers.ObjectTypeInterface) {
-	o = &Observation{
-		model: models.Observation{},
+func NewSupportStatusDetails() (o resolvers.ObjectTypeInterface) {
+	o = &SupportStatusDetails{
+		model: models.SupportStatusDetails{},
 	}
 	return o
 }
-func (o *Observation) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
+func (o *SupportStatusDetails) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 	switch info.Operation {
 	case "query", "mutation":
 		switch info.Resolver {
-		case "observations":
-			r = info.Parent.(models.Device).Observations
+		case "supportStatusDetails":
+			r = info.Parent.(models.Device).SupportStatusDetails
 		}
 	}
 	return
 }
-func (o *Observation) Subscribe(info resolvers.ResolverInfo) (r bool) {
+func (o *SupportStatusDetails) Subscribe(info resolvers.ResolverInfo) (r bool) {
 	return
 }

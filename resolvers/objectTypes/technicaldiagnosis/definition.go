@@ -20,27 +20,35 @@ import (
 )
 
 type TechnicalDiagnosis struct {
-	model models.TechnicalDiagnosis
+	model       models.TechnicalDiagnosis
+	deviceModel models.Device
 }
 
 func NewTechnicalDiagnosis(db dbutils.DBInterface) (o resolvers.ObjectTypeInterface) {
 	o = &TechnicalDiagnosis{
-		model: models.TechnicalDiagnosis{},
+		model:       models.TechnicalDiagnosis{},
+		deviceModel: models.Device{},
 	}
 	o.(*TechnicalDiagnosis).model.Init(models.TechnicalDiagnosis{}, db)
+	o.(*TechnicalDiagnosis).deviceModel.Init(models.Device{}, db)
 	return o
 }
 func (o *TechnicalDiagnosis) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 	switch info.Operation {
 	case "query":
-		break
+		switch info.Resolver {
+		case "edges":
+			r, err = o.edges(info)
+		case "technicalDiagnosis":
+			r, err = o.technicalDiagnosis(info)
+		}
 	case "mutation":
 		switch info.Resolver {
 		case "createTechnicalDiagnosis":
 			r, err = o.createTechnicalDiagnosisMutation(info)
-			break
+		case "technicalDiagnosis":
+			r, err = o.technicalDiagnosis(info)
 		}
-		break
 	}
 	return
 }

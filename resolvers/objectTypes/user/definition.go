@@ -42,7 +42,7 @@ func (o *User) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, er
 		switch info.Resolver {
 		case "edges":
 			r, err = o.edges(info)
-		case "user":
+		case "user", "recordUser", "receiverUser":
 			r, err = o.user(info)
 		}
 	case "mutation":
@@ -57,7 +57,7 @@ func (o *User) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, er
 			r, err = o.resetUserPasswordMutation(info)
 		case "assignPermissions":
 			r, err = o.assignPermissions(info)
-		case "user":
+		case "user", "recordUser", "receiverUser":
 			r, err = o.user(info)
 		}
 	}

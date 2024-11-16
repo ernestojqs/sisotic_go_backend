@@ -44,7 +44,7 @@ func (o *Device) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, 
 	case "query":
 		switch info.Resolver {
 		case "edges":
-			r, err = o.createDevicesMutation(info)
+			r, err = o.edges(info)
 		}
 	case "mutation":
 		switch info.Resolver {

@@ -53,8 +53,10 @@ var (
 	ERROR_UPDATE_TECHNICAL_DIAGNOSIS_IN_DB = definitionError.ErrorDescriptor{Code: "048", Message: "Error when trying to update technical diagnosis in database", Level: definitionError.LEVEL_FATAL}
 	ERROR_DELETE_TECHNICAL_DIAGNOSIS_IN_DB = definitionError.ErrorDescriptor{Code: "049", Message: "Error when trying to delete technical diagnosis in database", Level: definitionError.LEVEL_FATAL}
 	ERROR_QUERY_TECHNICAL_DIAGNOSIS_IN_DB  = definitionError.ErrorDescriptor{Code: "050", Message: "Technical diagnosis not found in database", Level: definitionError.LEVEL_FATAL}
-	ERROR_TECHNICAL_DIAGNOSIS_REQUERIDED   = definitionError.ErrorDescriptor{Code: "051", Message: "If the place is local and the device will be supported, information on technical diagnostics and resolver activities is required", Level: definitionError.LEVEL_FATAL}
+	ERROR_TECHNICAL_DIAGNOSIS_REQUERIDED   = definitionError.ErrorDescriptor{Code: "051", Message: "If the place of support is local and the device will be supported, information on technical diagnostics and resolver activities is required", Level: definitionError.LEVEL_FATAL}
 	ERROR_USER_ALREADY_HAS_PERMISSION      = definitionError.ErrorDescriptor{Code: "052", Message: "The user already have the provided permission", Level: definitionError.LEVEL_FATAL}
 	ERROR_NOT_FOUND_PERMISSION_IN_USER     = definitionError.ErrorDescriptor{Code: "053", Message: "The user does not have the provided permission", Level: definitionError.LEVEL_FATAL}
 	ERROR_USER_ACCOUNT_BLOCKED             = definitionError.ErrorDescriptor{Code: "054", Message: "The user account has been blocked", Level: definitionError.LEVEL_FATAL}
+	ERROR_TRANSFER__EVIDENCE_REQUERIDED    = definitionError.ErrorDescriptor{Code: "055", Message: "If the place of support is workshop, the transfer evidence is requerided", Level: definitionError.LEVEL_FATAL}
+	ERROR_ACCOUNT_BLOCKED_CONTACT_ADMIN    = definitionError.ErrorDescriptor{Code: "056", Message: "Your account has been locked, contact your administrator to unlock it", Level: definitionError.LEVEL_FATAL}
 )

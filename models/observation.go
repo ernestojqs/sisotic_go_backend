@@ -14,12 +14,7 @@
  */
 package models
 
-import (
-	"github.com/pjmd89/mongomodel/mongomodel"
-)
-
 type Observation struct {
-	mongomodel.Model `bson:"-" gql:"omit=true"`
-	Description      string `bson:"description" gql:"name=description"`
-	PhotoPath        string `bson:"photoPath" gql:"name=photoPath"`
+	Description string `bson:"description" gql:"name=description"`
+	PhotoPath   string `bson:"photoPath" gql:"name=photoPath"`
 }

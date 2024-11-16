@@ -38,6 +38,7 @@ import (
 	"otic/resolvers/objectTypes/observation"
 	"otic/resolvers/objectTypes/pageinfo"
 	"otic/resolvers/objectTypes/resolveractivity"
+	"otic/resolvers/objectTypes/supportstatusdetails"
 	"otic/resolvers/objectTypes/systeminfo"
 	"otic/resolvers/objectTypes/task"
 	"otic/resolvers/objectTypes/technicaldiagnosis"
@@ -154,6 +155,7 @@ func init() {
 	schema.ObjectType("JobArea", jobarea.NewJobArea(db))
 	schema.ObjectType("EdgeResolverActivity", edgeresolveractivity.NewEdgeResolverActivity(db))
 	schema.ObjectType("Module", module.NewModule(db))
+	schema.ObjectType("StatusDetails", supportstatusdetails.NewSupportStatusDetails())
 	schema.Scalar("Email", scalars.NewEmailScalar())
 	schema.Scalar("PhoneNumber", scalars.NewPhoneNumberScalar())
 	schema.Scalar("DateTime", scalars.NewDateTimeScalar())

@@ -27,15 +27,15 @@ func NewTransferEvidence(db dbutils.DBInterface) (o resolvers.ObjectTypeInterfac
 	o = &TransferEvidence{
 		model: models.TransferEvidence{},
 	}
-	o.(*TransferEvidence).model.Init(models.TransferEvidence{}, db)
 	return o
 }
 func (o *TransferEvidence) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 	switch info.Operation {
-	case "query":
-		break
-	case "mutation":
-		break
+	case "query", "mutation":
+		switch info.Resolver {
+		case "transferEvidences":
+			r = info.Parent.(models.Device).TransferEvidences
+		}
 	}
 	return
 }

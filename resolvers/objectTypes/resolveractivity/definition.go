@@ -33,14 +33,19 @@ func NewResolverActivity(db dbutils.DBInterface) (o resolvers.ObjectTypeInterfac
 func (o *ResolverActivity) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 	switch info.Operation {
 	case "query":
-		break
+		switch info.Resolver {
+		case "edges":
+			r, err = o.edges(info)
+		case "resolverActivities":
+			r, err = o.resolverActivity(info)
+		}
 	case "mutation":
 		switch info.Resolver {
 		case "createResolverActivity":
 			r, err = o.createResolverActivityMutation(info)
-			break
+		case "resolverActivities":
+			r, err = o.resolverActivity(info)
 		}
-		break
 	}
 	return
 }
