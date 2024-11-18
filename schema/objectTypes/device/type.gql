@@ -4,6 +4,7 @@ type Device {
     """
     _id:ID!
     placeOfCare:PlaceOfCareEnum!
+    estimatedDeliveryDate: DateTime
     """
     -type ID
     """

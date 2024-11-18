@@ -27,6 +27,7 @@ type ResolverActivity struct {
 	Description      string             `bson:"description" gql:"name=description"`
 	Recommendations  string             `bson:"recommendations" gql:"name=recommendations"`
 	ResolverUser     primitive.ObjectID `bson:"resolverUser" gql:"name=resolverUser,objectID=true"`
+	ResolvedDate     scalars.DateTime   `bson:"resolvedDate" gql:"name=resolvedDate"`
 	Created          scalars.DateTime   `bson:"created" gql:"name=created,created=true"`
 	Updated          scalars.DateTime   `bson:"updated" gql:"name=updated,updated=true"`
 }

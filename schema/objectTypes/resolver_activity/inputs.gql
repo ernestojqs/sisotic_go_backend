@@ -2,9 +2,11 @@ input CreateResolverActivity {
     technicalDiagnosisID: ID!
     description:String!
     recommendations:String
+    resolvedDate: DateTime!
 }
 
 input CreateLocalResolverActivity {
     description:String!
     recommendations:String
+    resolvedDate: DateTime!
 }

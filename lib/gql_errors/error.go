@@ -53,7 +53,7 @@ var (
 	ERROR_UPDATE_TECHNICAL_DIAGNOSIS_IN_DB = definitionError.ErrorDescriptor{Code: "048", Message: "Error when trying to update technical diagnosis in database", Level: definitionError.LEVEL_FATAL}
 	ERROR_DELETE_TECHNICAL_DIAGNOSIS_IN_DB = definitionError.ErrorDescriptor{Code: "049", Message: "Error when trying to delete technical diagnosis in database", Level: definitionError.LEVEL_FATAL}
 	ERROR_QUERY_TECHNICAL_DIAGNOSIS_IN_DB  = definitionError.ErrorDescriptor{Code: "050", Message: "Technical diagnosis not found in database", Level: definitionError.LEVEL_FATAL}
-	ERROR_TECHNICAL_DIAGNOSIS_REQUERIDED   = definitionError.ErrorDescriptor{Code: "051", Message: "If the place of support is local and the device will be supported, information on technical diagnostics and resolver activities is required", Level: definitionError.LEVEL_FATAL}
+	ERROR_TECHNICAL_DIAGNOSIS_REQUERIDED   = definitionError.ErrorDescriptor{Code: "051", Message: "If the place of support is local and the device will be supported, information on technical diagnosis and resolver activities is required", Level: definitionError.LEVEL_FATAL}
 	ERROR_USER_ALREADY_HAS_PERMISSION      = definitionError.ErrorDescriptor{Code: "052", Message: "The user already have the provided permission", Level: definitionError.LEVEL_FATAL}
 	ERROR_NOT_FOUND_PERMISSION_IN_USER     = definitionError.ErrorDescriptor{Code: "053", Message: "The user does not have the provided permission", Level: definitionError.LEVEL_FATAL}
 	ERROR_USER_ACCOUNT_BLOCKED             = definitionError.ErrorDescriptor{Code: "054", Message: "The user account has been blocked", Level: definitionError.LEVEL_FATAL}
@@ -64,8 +64,14 @@ var (
 	ERROR_UPDATE_TASK_IN_DB                = definitionError.ErrorDescriptor{Code: "059", Message: "Error when trying to update task in database", Level: definitionError.LEVEL_FATAL}
 	ERROR_DELETE_TASK_IN_DB                = definitionError.ErrorDescriptor{Code: "060", Message: "Error when trying to delete task in database", Level: definitionError.LEVEL_FATAL}
 	ERROR_QUERY_TASK_IN_DB                 = definitionError.ErrorDescriptor{Code: "061", Message: "Task not found in database", Level: definitionError.LEVEL_FATAL}
-	ERROR_DEVICE_IS_NOT_COMPLETED          = definitionError.ErrorDescriptor{Code: "062", Message: "To perform this operation the support status of the device must to be \"Completed\"", Level: definitionError.LEVEL_FATAL}
+	ERROR_BAD_STATUS_ORDER_5               = definitionError.ErrorDescriptor{Code: "062", Message: "To perform this operation the support status of the device must to be \"Completed\"", Level: definitionError.LEVEL_FATAL}
 	ERROR_DEVICES_FROM_DIFFERENT_GROUP_ID  = definitionError.ErrorDescriptor{Code: "063", Message: "Devices do not share the same group ID", Level: definitionError.LEVEL_FATAL}
 	ERROR_BAD_MODULES_QUANTITY             = definitionError.ErrorDescriptor{Code: "064", Message: "The modules quantity does not match with the available modules (8 modules)", Level: definitionError.LEVEL_FATAL}
 	ERROR_BAD_MODULES_OPERATIONS_QUANTITY  = definitionError.ErrorDescriptor{Code: "065", Message: "One of the modules has more operations than are available", Level: definitionError.LEVEL_FATAL}
+	ERROR_BAD_STATUS_ORDER_3               = definitionError.ErrorDescriptor{Code: "066", Message: "Already recorded the provided status in this device", Level: definitionError.LEVEL_FATAL}
+	ERROR_BAD_STATUS_ORDER_1               = definitionError.ErrorDescriptor{Code: "067", Message: "If the current support status is \"Process\" is impossible to change status to \"Pending\"", Level: definitionError.LEVEL_FATAL}
+	ERROR_BAD_STATUS_ORDER_2               = definitionError.ErrorDescriptor{Code: "068", Message: "To mark the support status as \"Completed\", before the status must be \"Process\"", Level: definitionError.LEVEL_FATAL}
+	ERROR_BAD_STATUS_ORDER_4               = definitionError.ErrorDescriptor{Code: "069", Message: "Imposible to mark support status as \"Delivered\" in this operation", Level: definitionError.LEVEL_FATAL}
+	ERROR_CANNOT_UPDATE_DEVICE_INFO        = definitionError.ErrorDescriptor{Code: "070", Message: "Cannot update device info in this operation if the support status is \"Delivered\" or \"Completed\"", Level: definitionError.LEVEL_FATAL}
+	ERROR_DIAGNOSIS_NOT_RESOLVED           = definitionError.ErrorDescriptor{Code: "071", Message: "Impossible to mark support status as \"Completed\" if the technical diagnosis are not yet resolved", Level: definitionError.LEVEL_FATAL}
 )

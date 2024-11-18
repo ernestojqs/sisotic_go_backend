@@ -39,6 +39,7 @@ type Device struct {
 	TechnicalDiagnosis   []primitive.ObjectID    `bson:"technicalDiagnosis" gql:"name=technicalDiagnosis,objectID=true"`
 	CurrentSupportStatus enums.SupportStatusEnum `bson:"currentSupportStatus" gql:"name=currentSupportStatus"`
 	SupportStatusDetails []SupportStatusDetails  `bson:"supportStatusDetails" gql:"name=supportStatusDetails"`
+	ResolvedDate         scalars.DateTime        `bson:"estimatedDeliveryDate" gql:"name=estimatedDeliveryDate"`
 	Created              scalars.DateTime        `bson:"created" gql:"name=created,created=true"`
 	Updated              scalars.DateTime        `bson:"updated" gql:"name=updated,updated=true"`
 }

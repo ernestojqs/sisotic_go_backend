@@ -4,6 +4,7 @@ type Task {
     """
     _id:ID!
     description:String!
+    resolvedDate: DateTime
     """
     -type ID
     """

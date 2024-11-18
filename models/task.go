@@ -26,6 +26,7 @@ type Task struct {
 	Id               primitive.ObjectID `bson:"_id,omitempty" gql:"name=_id,id=true,objectID=true"`
 	Description      string             `bson:"description" gql:"name=description"`
 	JobArea          primitive.ObjectID `bson:"jobArea" gql:"name=jobArea,objectID=true"`
+	ResolvedDate     scalars.DateTime   `bson:"resolvedDate" gql:"name=resolvedDate"`
 	Autor            primitive.ObjectID `bson:"autor" gql:"name=autor,objectID=true"`
 	Created          scalars.DateTime   `bson:"created" gql:"name=created,created=true"`
 	Updated          scalars.DateTime   `bson:"updated" gql:"name=updated,updated=true"`

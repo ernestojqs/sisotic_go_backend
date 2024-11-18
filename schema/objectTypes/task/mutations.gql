@@ -2,7 +2,7 @@ extend type Mutation{
     """
     -auth admin, user
     """
-    createTask(inputDescription:String!): Task
+    createTask(input:CreateTask): Task
     """
     -auth admin, user
     """

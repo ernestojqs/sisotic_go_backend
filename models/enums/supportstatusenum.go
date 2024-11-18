@@ -14,8 +14,8 @@ package enums
 type SupportStatusEnum string
 
 const (
-	SUPPORTSTATUSENUM_PENDING   SupportStatusEnum = "pending"
-	SUPPORTSTATUSENUM_PROCESS                     = "process"
-	SUPPORTSTATUSENUM_COMPLETED                   = "completed"
-	SUPPORTSTATUSENUM_DELIVERED                   = "delivered"
+	SUPPORTSTATUSENUM_PENDING   = "pending"
+	SUPPORTSTATUSENUM_PROCESS   = "process"
+	SUPPORTSTATUSENUM_COMPLETED = "completed"
+	SUPPORTSTATUSENUM_DELIVERED = "delivered"
 )

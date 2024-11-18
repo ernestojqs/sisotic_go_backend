@@ -24,17 +24,14 @@ import (
 )
 
 func (o *Task) createTaskMutation(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
-	inputDescription := info.Args["inputDescription"].(string)
+	input := info.Args["input"].(map[string]any)
 	session, _ := utils.GetSession(info.SessionID)
 	user, _ := o.userModel.Read(map[string]any{"_id": session.UserID}, nil)
 	jobAreaWhere := bson.M{"jobTitles": bson.M{"$in": bson.A{user.([]models.User)[0].JobTitle}}}
 	jobArea, _ := o.jobAreaModel.Read(jobAreaWhere, nil)
-	taskInput := map[string]any{
-		"description": inputDescription,
-		"jobArea":     jobArea.([]models.JobArea)[0].Id,
-		"autor":       session.UserID,
-	}
-	r, rerr := o.model.Create(taskInput, nil)
+	input["jobArea"] = jobArea.([]models.JobArea)[0].Id
+	input["autor"] = session.UserID
+	r, rerr := o.model.Create(input, nil)
 	if rerr != nil {
 		lib.Logs.System.Warning().Println(gqlErrors.ERROR_INSERT_TASK_IN_DB)
 		err = definitionError.NewError(gqlErrors.ERROR_INSERT_TASK_IN_DB, nil)

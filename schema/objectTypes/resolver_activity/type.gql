@@ -5,6 +5,7 @@ type ResolverActivity {
     _id:ID!
     description:String!
     recommendations:String
+    resolvedDate: DateTime
     """
     -type ID
     """

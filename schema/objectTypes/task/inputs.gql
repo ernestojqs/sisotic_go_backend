@@ -1,3 +1,8 @@
+input CreateTask {
+    resolvedDate: DateTime!
+    description: String!
+}
+
 input UpdateTask {
     _id:ID!
     description: String!

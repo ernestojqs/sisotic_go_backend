@@ -12,6 +12,10 @@
 package scalars
 
 import (
+	"log"
+	gqlErrors "otic/lib/gql_errors"
+	"strconv"
+
 	"github.com/pjmd89/gogql/lib/gql/definitionError"
 	"github.com/pjmd89/gogql/lib/resolvers"
 )
@@ -26,6 +30,19 @@ func NewDateTimeScalar() (r resolvers.Scalar) {
 
 func (o *DateTime) Set(value interface{}) (r interface{}, err definitionError.GQLError) {
 	r = value
+	if value != nil {
+		var er error
+		r, er = strconv.ParseInt(value.(string), 10, 64)
+		if er != nil {
+			log.Println("Wrong Datetime: ", value)
+			errExtension := definitionError.ExtensionError{
+				"code": gqlErrors.ERROR_INVALID_DATETIME.Code,
+			}
+			err = definitionError.NewFatal(gqlErrors.ERROR_INVALID_DATETIME.Message, errExtension)
+			return
+		}
+		r = r.(int64)
+	}
 	return
 }
 

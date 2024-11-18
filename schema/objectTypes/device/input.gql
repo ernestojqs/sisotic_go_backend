@@ -10,6 +10,7 @@ input CreateDeviceInfo {
    assetCode:String
    serialCode:String
    type:String
+   estimatedDeliveryDate: DateTime
    model:String
    observations:[SetDeviceObservationInput!]
    """
