@@ -25,8 +25,22 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+func (o *Device) checkAdminJobTitle(adminID primitive.ObjectID) (err definitionError.GQLError) {
+	user, _ := o.userModel.Read(map[string]any{"_id": adminID}, nil)
+	if user.([]models.User)[0].JobTitle == primitive.NilObjectID {
+		lib.Logs.System.Warning().Println(gqlErrors.ERROR_ADMIN_WITHOUT_JOB_TITLE)
+		err = definitionError.NewError(gqlErrors.ERROR_ADMIN_WITHOUT_JOB_TITLE, nil)
+	}
+	return
+}
+
 func (o *Device) createDevicesMutation(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 	sess, _ := utils.GetSession(info.SessionID)
+	if sess.UserRole == string(enums.ROLEENUM_ADMIN) {
+		if err = o.checkAdminJobTitle(sess.UserID); err != nil {
+			return
+		}
+	}
 	input := info.Args["input"].(map[string]any)
 	r = []models.Device{}
 	collegeDependencyID := input["collegeDependency"].(primitive.ObjectID)

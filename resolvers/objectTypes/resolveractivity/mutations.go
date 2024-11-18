@@ -69,10 +69,24 @@ func (o *ResolverActivity) createTask(description string, userID primitive.Objec
 	o.taskModel.Create(taskInput, nil)
 }
 
+func (o *ResolverActivity) checkAdminJobTitle(adminID primitive.ObjectID) (err definitionError.GQLError) {
+	user, _ := o.userModel.Read(map[string]any{"_id": adminID}, nil)
+	if user.([]models.User)[0].JobTitle == primitive.NilObjectID {
+		lib.Logs.System.Warning().Println(gqlErrors.ERROR_ADMIN_WITHOUT_JOB_TITLE)
+		err = definitionError.NewError(gqlErrors.ERROR_ADMIN_WITHOUT_JOB_TITLE, nil)
+	}
+	return
+}
+
 func (o *ResolverActivity) createResolverActivityMutation(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 	input := info.Args["input"].(map[string]any)
 	diagnosisID := input["technicalDiagnosisID"].(primitive.ObjectID)
 	sess, _ := utils.GetSession(info.SessionID)
+	if sess.UserRole == string(enums.ROLEENUM_ADMIN) {
+		if err = o.checkAdminJobTitle(sess.UserID); err != nil {
+			return
+		}
+	}
 	input["resolverUser"] = sess.UserID
 	dbDiagnosis, err := o.readDiagnosis(diagnosisID)
 	if err != nil {

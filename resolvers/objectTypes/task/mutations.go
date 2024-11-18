@@ -16,6 +16,7 @@ import (
 	gqlErrors "otic/lib/gql_errors"
 	"otic/lib/utils"
 	"otic/models"
+	"otic/models/enums"
 
 	"github.com/pjmd89/gogql/lib/gql/definitionError"
 	"github.com/pjmd89/gogql/lib/resolvers"
@@ -23,9 +24,22 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+func (o *Task) checkAdminJobTitle(adminID primitive.ObjectID) (err definitionError.GQLError) {
+	user, _ := o.userModel.Read(map[string]any{"_id": adminID}, nil)
+	if user.([]models.User)[0].JobTitle == primitive.NilObjectID {
+		lib.Logs.System.Warning().Println(gqlErrors.ERROR_ADMIN_WITHOUT_JOB_TITLE)
+		err = definitionError.NewError(gqlErrors.ERROR_ADMIN_WITHOUT_JOB_TITLE, nil)
+	}
+	return
+}
 func (o *Task) createTaskMutation(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 	input := info.Args["input"].(map[string]any)
 	session, _ := utils.GetSession(info.SessionID)
+	if session.UserRole == string(enums.ROLEENUM_ADMIN) {
+		if err = o.checkAdminJobTitle(session.UserID); err != nil {
+			return
+		}
+	}
 	user, _ := o.userModel.Read(map[string]any{"_id": session.UserID}, nil)
 	jobAreaWhere := bson.M{"jobTitles": bson.M{"$in": bson.A{user.([]models.User)[0].JobTitle}}}
 	jobArea, _ := o.jobAreaModel.Read(jobAreaWhere, nil)

@@ -74,4 +74,5 @@ var (
 	ERROR_BAD_STATUS_ORDER_4               = definitionError.ErrorDescriptor{Code: "069", Message: "Imposible to mark support status as \"Delivered\" in this operation", Level: definitionError.LEVEL_FATAL}
 	ERROR_CANNOT_UPDATE_DEVICE_INFO        = definitionError.ErrorDescriptor{Code: "070", Message: "Cannot update device info in this operation if the support status is \"Delivered\" or \"Completed\"", Level: definitionError.LEVEL_FATAL}
 	ERROR_DIAGNOSIS_NOT_RESOLVED           = definitionError.ErrorDescriptor{Code: "071", Message: "Impossible to mark support status as \"Completed\" if the technical diagnosis are not yet resolved", Level: definitionError.LEVEL_FATAL}
+	ERROR_ADMIN_WITHOUT_JOB_TITLE          = definitionError.ErrorDescriptor{Code: "072", Message: "The admin does not have a job title assigned", Level: definitionError.LEVEL_FATAL}
 )
