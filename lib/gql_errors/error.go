@@ -64,4 +64,8 @@ var (
 	ERROR_UPDATE_TASK_IN_DB                = definitionError.ErrorDescriptor{Code: "059", Message: "Error when trying to update task in database", Level: definitionError.LEVEL_FATAL}
 	ERROR_DELETE_TASK_IN_DB                = definitionError.ErrorDescriptor{Code: "060", Message: "Error when trying to delete task in database", Level: definitionError.LEVEL_FATAL}
 	ERROR_QUERY_TASK_IN_DB                 = definitionError.ErrorDescriptor{Code: "061", Message: "Task not found in database", Level: definitionError.LEVEL_FATAL}
+	ERROR_DEVICE_IS_NOT_COMPLETED          = definitionError.ErrorDescriptor{Code: "062", Message: "To perform this operation the support status of the device must to be \"Completed\"", Level: definitionError.LEVEL_FATAL}
+	ERROR_DEVICES_FROM_DIFFERENT_GROUP_ID  = definitionError.ErrorDescriptor{Code: "063", Message: "Devices do not share the same group ID", Level: definitionError.LEVEL_FATAL}
+	ERROR_BAD_MODULES_QUANTITY             = definitionError.ErrorDescriptor{Code: "064", Message: "The modules quantity does not match with the available modules (8 modules)", Level: definitionError.LEVEL_FATAL}
+	ERROR_BAD_MODULES_OPERATIONS_QUANTITY  = definitionError.ErrorDescriptor{Code: "065", Message: "One of the modules has more operations than are available", Level: definitionError.LEVEL_FATAL}
 )

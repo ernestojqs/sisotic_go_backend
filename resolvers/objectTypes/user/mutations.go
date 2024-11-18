@@ -153,6 +153,8 @@ func (o *User) updateUserMutation(info resolvers.ResolverInfo) (r resolvers.Data
 }
 
 func (o *User) assignPermissions(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
+	const modulesQtty = 8
+	const operationsQtty = 4
 	input := info.Args["input"].(map[string]any)
 	userWhere := map[string]any{"_id": input["userID"].(primitive.ObjectID)}
 	user, rerr := o.model.Read(userWhere, nil)
@@ -162,15 +164,26 @@ func (o *User) assignPermissions(info resolvers.ResolverInfo) (r resolvers.DataR
 		return
 	}
 
-	for _, v := range input["permissions"].([]any) {
-		permissionMap := v.(map[string]any)
-		var operationStr []string
-		for _, operation := range permissionMap["operations"].([]any) {
-			operationStr = append(operationStr, operation.(string))
-		}
-		permissionMap["operations"] = operationStr
+	if len(input["permissions"].([]any)) > modulesQtty {
+		lib.Logs.System.Warning().Println(gqlErrors.ERROR_BAD_MODULES_QUANTITY)
+		err = definitionError.NewError(gqlErrors.ERROR_BAD_MODULES_QUANTITY, nil)
+		return
 	}
 
+	for _, v := range input["permissions"].([]any) {
+		modulePermission := v.(map[string]any)
+		if len(modulePermission["operations"].([]any)) > operationsQtty {
+			lib.Logs.System.Warning().Println(gqlErrors.ERROR_BAD_MODULES_QUANTITY)
+			err = definitionError.NewError(gqlErrors.ERROR_BAD_MODULES_QUANTITY, nil)
+			return
+		}
+		var parsedOperations []string
+		for _, operation := range modulePermission["operations"].([]any) {
+			parsedOperations = append(parsedOperations, operation.(string))
+		}
+		modulePermission["operations"] = parsedOperations
+	}
+	delete(input, "userID")
 	result, rerr := o.model.Update(input, userWhere, nil)
 	if rerr != nil {
 		lib.Logs.System.Warning().Println(rerr.Error())

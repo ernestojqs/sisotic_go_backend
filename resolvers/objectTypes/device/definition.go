@@ -61,6 +61,8 @@ func (o *Device) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, 
 			r, err = o.updateDeviceMutation(info)
 		case "deleteDevice":
 			r, err = o.deleteDeviceMutation(info)
+		case "deliveryDevices":
+			r, err = o.deliveryDevices(info)
 		}
 	}
 	return

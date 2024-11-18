@@ -11,4 +11,8 @@ extend type Mutation{
     -auth admin, user
     """
     deleteDevice(_id: ID): Device
+    """
+    -auth admin, user
+    """
+    deliveryDevices(input: DeliveryDevicesInput): Device
 }

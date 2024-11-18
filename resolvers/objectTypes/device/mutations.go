@@ -44,10 +44,11 @@ func (o *Device) createDevicesMutation(info resolvers.ResolverInfo) (r resolvers
 		input["transferEvidence"].(map[string]any)["transferType"] = string(enums.TRANSFERTYPEENUM_ENTRY)
 	}
 
+	groupID := utils.GenerateTokenFromUUID(12, true)
 	for _, v := range input["deviceInfo"].([]any) {
 		deviceInfo := v.(map[string]any)
+		deviceInfo["groupID"] = groupID
 		deviceInfo["receiverUser"] = sess.UserID
-		deviceInfo["groupID"] = utils.GenerateTokenFromUUID(12, true)
 		deviceInfo["collegeDependency"] = collegeDependencyID
 		deviceInfo["placeOfCare"] = placeOfCare
 		if placeOfCare == string(enums.PLACEOFCAREENUM_LOCAL) {
@@ -208,4 +209,68 @@ func (o *Device) createLocalInfo(localTechnicalDiagnosis []any, loggedUserID pri
 		techDiagnosisIDs = append(techDiagnosisIDs, createdDiagnosis.(models.TechnicalDiagnosis).Id)
 	}
 	return
+}
+
+func (o *Device) deliveryDevices(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
+	input := info.Args["input"].(map[string]any)
+	var updatedDevices, dbDevices []models.Device
+	input["transferEvidence"].(map[string]any)["transferType"] = string(enums.TRANSFERTYPEENUM_EXIT)
+	sess, _ := utils.GetSession(info.SessionID)
+	var groupID string
+	for i, deviceID := range input["deviceIDs"].([]any) {
+		dbDevice, rerr := o.readDevice(deviceID.(primitive.ObjectID))
+		if rerr != nil {
+			o.updateDeviceToPreviousValues(dbDevices)
+			err = rerr
+			return
+		}
+
+		if i == 0 {
+			groupID = dbDevice.GroupID
+		}
+
+		if dbDevice.GroupID != groupID {
+			lib.Logs.System.Warning().Println(gqlErrors.ERROR_DEVICES_FROM_DIFFERENT_GROUP_ID)
+			o.updateDeviceToPreviousValues(dbDevices)
+			err = definitionError.NewError(gqlErrors.ERROR_DEVICES_FROM_DIFFERENT_GROUP_ID, nil)
+			return
+		}
+		if dbDevice.CurrentSupportStatus != enums.SUPPORTSTATUSENUM_COMPLETED {
+			lib.Logs.System.Warning().Println(gqlErrors.ERROR_DEVICE_IS_NOT_COMPLETED)
+			o.updateDeviceToPreviousValues(dbDevices)
+			err = definitionError.NewError(gqlErrors.ERROR_DEVICE_IS_NOT_COMPLETED, nil)
+			return
+		}
+		dbDevices = append(dbDevices, dbDevice)
+		tranferEvidences := []any{
+			utils.ParseDBObj(dbDevice.TransferEvidences[0]),
+			input["transferEvidence"],
+		}
+		recordingStatus := utils.ParseArayDBObj(dbDevice.SupportStatusDetails)
+		recordingStatus = append(recordingStatus, map[string]any{
+			"type":       string(enums.SUPPORTSTATUSENUM_DELIVERED),
+			"date":       time.Now().Unix(),
+			"recordUser": sess.UserID,
+		})
+		deviceInput := map[string]any{
+			"transferEvidences":    tranferEvidences,
+			"currentSupport":       string(enums.SUPPORTSTATUSENUM_DELIVERED),
+			"supportStatusDetails": recordingStatus,
+		}
+		result, _ := o.updateDevice(dbDevice.Id, deviceInput)
+		updatedDevices = append(updatedDevices, result)
+	}
+	r = updatedDevices
+	return
+}
+
+func (o *Device) updateDeviceToPreviousValues(devices []models.Device) {
+	for _, v := range devices {
+		input := map[string]any{
+			"transferEvidences":    utils.ParseArayDBObj(v.TransferEvidences),
+			"currentSupport":       string(v.CurrentSupportStatus),
+			"supportStatusDetails": utils.ParseArayDBObj(v.SupportStatusDetails),
+		}
+		o.updateDevice(v.Id, input)
+	}
 }

@@ -33,6 +33,6 @@ input UpdateDevice {
 }
 
 input DeliveryDevicesInput {
-   transferEvidence:SetDeviceTransferEvidence
+   transferEvidence:SetDeviceTransferEvidence!
    deviceIDs: [ID!]!
 }
