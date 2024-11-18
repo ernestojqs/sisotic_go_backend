@@ -6,12 +6,12 @@ enum OperationEnum {
 }
 
 enum ModuleNameEnum {
-    collegeDependency
-    device
-    jobArea
-    jobTitle
-    resolverActivity
-    task
-    technicalDiagnosis
-    user
+    CollegeDependency
+    Device
+    JobArea
+    JobTitle
+    ResolverActivity
+    Task
+    TechnicalDiagnosis
+    User
 }

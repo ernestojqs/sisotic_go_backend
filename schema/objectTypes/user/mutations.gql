@@ -10,11 +10,8 @@ extend type Mutation{
     deleteUser(_id: ID!): User 
     resetUserPassword(input:ResetUserPassword): User
     """"
-    -auth root
+    -auth admin
     """
     assignPermissions(input:PermissionsInput): User
-    """"
-    -auth root
-    """
     removePermissions(input:PermissionsInput): User
 }

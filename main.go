@@ -14,11 +14,13 @@ package main
 import (
 	"embed"
 	"slices"
+	"strings"
 
 	"otic/lib"
 	"otic/lib/generateauth"
 	gqlErrors "otic/lib/gql_errors"
 	"otic/lib/utils"
+	"otic/models/enums"
 	"otic/resolvers/directives"
 	"otic/resolvers/objectTypes/changelog"
 	"otic/resolvers/objectTypes/collegedependency"
@@ -119,6 +121,28 @@ func OnAuthorizate(authInfo gql.AuthorizateInfo) (err definitionError.GQLError) 
 		return
 	}
 
+	if session.UserRole != string(enums.ROLEENUM_ADMIN) && authInfo.DstType != lib.TYPE_UPLOAD {
+		moduleName := string(authInfo.DstType)
+		resolver := ""
+		if authInfo.Operation == "query" {
+			moduleName, _ = strings.CutPrefix(moduleName, "Edge")
+			resolver = "read"
+		} else {
+			if strings.Contains(string(authInfo.Resolver), "create") {
+				resolver = "create"
+			}
+			if strings.Contains(string(authInfo.Resolver), "update") || authInfo.Resolver == lib.RESOLVER_DELIVERYDEVICES {
+				resolver = "update"
+			}
+			if strings.Contains(string(authInfo.Resolver), "delete") {
+				resolver = "delete"
+			}
+		}
+		if !user.CheckPermissions(session.UserID, moduleName, resolver, db) {
+			lib.Logs.System.Warning().Println(gqlErrors.ERROR_ACCESS_DENIED)
+			err = definitionError.NewError(gqlErrors.ERROR_ACCESS_DENIED, nil)
+		}
+	}
 	return
 }
 func init() {

@@ -26,6 +26,7 @@ var (
 )
 
 var (
+	RESOLVER_ASSIGNPERMISSIONS        gql.ResolverName = "assignPermissions"
 	RESOLVER_CANCELUPLOAD             gql.ResolverName = "cancelUpload"
 	RESOLVER_CHECKFILESIZE            gql.ResolverName = "checkFileSize"
 	RESOLVER_CREATECOLLEGEDEPENDENCY  gql.ResolverName = "createCollegeDependency"
@@ -37,7 +38,9 @@ var (
 	RESOLVER_CREATETECHNICALDIAGNOSIS gql.ResolverName = "createTechnicalDiagnosis"
 	RESOLVER_DELETECOLLEGEDEPENDENCY  gql.ResolverName = "deleteCollegeDependency"
 	RESOLVER_DELETEDEVICE             gql.ResolverName = "deleteDevice"
+	RESOLVER_DELETETASK               gql.ResolverName = "deleteTask"
 	RESOLVER_DELETEUSER               gql.ResolverName = "deleteUser"
+	RESOLVER_DELIVERYDEVICES          gql.ResolverName = "deliveryDevices"
 	RESOLVER_GETCOLLEGEDEPENDENCIES   gql.ResolverName = "getCollegeDependencies"
 	RESOLVER_GETDEVICES               gql.ResolverName = "getDevices"
 	RESOLVER_GETJOBAREAS              gql.ResolverName = "getJobAreas"
@@ -64,9 +67,10 @@ var Auth = gql.Grant{
 			RESOLVER_UPDATECOLLEGEDEPENDENCY: {`admin`, `user`},
 		},
 		TYPE_DEVICE: {
-			RESOLVER_CREATEDEVICES: {`admin`, `user`},
-			RESOLVER_DELETEDEVICE:  {`admin`, `user`},
-			RESOLVER_UPDATEDEVICE:  {`admin`, `user`},
+			RESOLVER_CREATEDEVICES:   {`admin`, `user`},
+			RESOLVER_DELETEDEVICE:    {`admin`, `user`},
+			RESOLVER_DELIVERYDEVICES: {`admin`, `user`},
+			RESOLVER_UPDATEDEVICE:    {`admin`, `user`},
 		},
 		TYPE_JOBAREA: {
 			RESOLVER_CREATEJOBAREA: {`admin`, `user`},
@@ -81,6 +85,7 @@ var Auth = gql.Grant{
 		},
 		TYPE_TASK: {
 			RESOLVER_CREATETASK: {`admin`, `user`},
+			RESOLVER_DELETETASK: {`admin`, `user`},
 			RESOLVER_UPDATETASK: {`admin`, `user`},
 		},
 		TYPE_TECHNICALDIAGNOSIS: {
@@ -91,8 +96,9 @@ var Auth = gql.Grant{
 			RESOLVER_UPLOAD:       {`admin`, `user`},
 		},
 		TYPE_USER: {
-			RESOLVER_DELETEUSER: {`admin`, `user`},
-			RESOLVER_UPDATEUSER: {`admin`, `user`},
+			RESOLVER_ASSIGNPERMISSIONS: {`admin`},
+			RESOLVER_DELETEUSER:        {`admin`, `user`},
+			RESOLVER_UPDATEUSER:        {`admin`, `user`},
 		},
 	},
 	TYPE_QUERY: {

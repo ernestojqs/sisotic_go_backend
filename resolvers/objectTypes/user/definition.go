@@ -17,6 +17,8 @@ import (
 	"github.com/pjmd89/gogql/lib/gql/definitionError"
 	"github.com/pjmd89/gogql/lib/resolvers"
 	"github.com/pjmd89/goutils/dbutils"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type User struct {
@@ -64,5 +66,18 @@ func (o *User) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, er
 	return
 }
 func (o *User) Subscribe(info resolvers.ResolverInfo) (r bool) {
+	return
+}
+
+func CheckPermissions(userID primitive.ObjectID, moduleName, resolver string, db dbutils.DBInterface) (r bool) {
+	userObj := NewUser(db).(*User)
+	userWhere := bson.M{
+		"_id":                    userID,
+		"permissions.name":       moduleName,
+		"permissions.operations": bson.M{"$in": bson.A{resolver}},
+	}
+	if result, _ := userObj.model.Read(userWhere, nil); len(result.([]models.User)) > 0 {
+		r = true
+	}
 	return
 }
