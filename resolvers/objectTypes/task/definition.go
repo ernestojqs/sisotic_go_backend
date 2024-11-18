@@ -20,30 +20,38 @@ import (
 )
 
 type Task struct {
-	model models.Task
+	model        models.Task
+	jobAreaModel models.JobArea
+	userModel    models.User
 }
 
 func NewTask(db dbutils.DBInterface) (o resolvers.ObjectTypeInterface) {
 	o = &Task{
-		model: models.Task{},
+		model:        models.Task{},
+		jobAreaModel: models.JobArea{},
+		userModel:    models.User{},
 	}
 	o.(*Task).model.Init(models.Task{}, db)
+	o.(*Task).jobAreaModel.Init(models.JobArea{}, db)
+	o.(*Task).userModel.Init(models.User{}, db)
 	return o
 }
 func (o *Task) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 	switch info.Operation {
 	case "query":
-		break
+		switch info.Resolver {
+		case "edges":
+			r, err = o.edges(info)
+		}
 	case "mutation":
 		switch info.Resolver {
 		case "createTask":
 			r, err = o.createTaskMutation(info)
-			break
 		case "updateTask":
 			r, err = o.updateTaskMutation(info)
-			break
+		case "deleteTask":
+			r, err = o.deleteTaskMutation(info)
 		}
-		break
 	}
 	return
 }

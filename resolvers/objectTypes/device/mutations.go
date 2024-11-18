@@ -21,6 +21,7 @@ import (
 
 	"github.com/pjmd89/gogql/lib/gql/definitionError"
 	"github.com/pjmd89/gogql/lib/resolvers"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -163,6 +164,18 @@ func (o *Device) deleteDeviceMutation(info resolvers.ResolverInfo) (r resolvers.
 	return
 }
 
+func (o *Device) createTask(description string, userID primitive.ObjectID) {
+	user, _ := o.userModel.Read(map[string]any{"_id": userID}, nil)
+	jobAreaWhere := bson.M{"jobTitles": bson.M{"$in": bson.A{user.([]models.User)[0].JobTitle}}}
+	jobArea, _ := o.jobAreaModel.Read(jobAreaWhere, nil)
+	taskInput := map[string]any{
+		"description": description,
+		"jobArea":     jobArea.([]models.JobArea)[0].Id,
+		"autor":       userID,
+	}
+	o.taskModel.Create(taskInput, nil)
+}
+
 func (o *Device) createLocalInfo(localTechnicalDiagnosis []any, loggedUserID primitive.ObjectID) (techDiagnosisIDs []primitive.ObjectID, err definitionError.GQLError) {
 	for _, v := range localTechnicalDiagnosis {
 		techDiagnosis := v.(map[string]any)
@@ -181,6 +194,7 @@ func (o *Device) createLocalInfo(localTechnicalDiagnosis []any, loggedUserID pri
 				err = definitionError.NewError(gqlErrors.ERROR_INSERT_RESOLVER_ACTIVITY_IN_DB, nil)
 				return
 			}
+			o.createTask(resolverActivityInput["description"].(string), loggedUserID)
 			resolverActivityIDs = append(resolverActivityIDs, result.(models.ResolverActivity).Id)
 		}
 		techDiagnosis["resolverActivities"] = resolverActivityIDs

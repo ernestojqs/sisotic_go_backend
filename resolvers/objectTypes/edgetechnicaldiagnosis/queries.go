@@ -12,11 +12,13 @@
 package edgetechnicaldiagnosis
 
 import (
+	"otic/lib"
+
 	"github.com/pjmd89/gogql/lib/gql/definitionError"
 	"github.com/pjmd89/gogql/lib/resolvers"
 )
 
 func (o *EdgeTechnicalDiagnosis) getTechnicalDiagnosisQuery(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
-
+	r = lib.NewEdge(info, "technicalDiagnosis")
 	return
 }

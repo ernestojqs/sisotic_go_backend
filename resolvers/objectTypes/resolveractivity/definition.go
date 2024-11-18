@@ -20,14 +20,29 @@ import (
 )
 
 type ResolverActivity struct {
-	model models.ResolverActivity
+	model              models.ResolverActivity
+	deviceModel        models.Device
+	technicalDiagnosis models.TechnicalDiagnosis
+	userModel          models.User
+	jobAreaModel       models.JobArea
+	taskModel          models.Task
 }
 
 func NewResolverActivity(db dbutils.DBInterface) (o resolvers.ObjectTypeInterface) {
 	o = &ResolverActivity{
-		model: models.ResolverActivity{},
+		model:              models.ResolverActivity{},
+		deviceModel:        models.Device{},
+		technicalDiagnosis: models.TechnicalDiagnosis{},
+		userModel:          models.User{},
+		jobAreaModel:       models.JobArea{},
+		taskModel:          models.Task{},
 	}
 	o.(*ResolverActivity).model.Init(models.ResolverActivity{}, db)
+	o.(*ResolverActivity).deviceModel.Init(models.Device{}, db)
+	o.(*ResolverActivity).technicalDiagnosis.Init(models.TechnicalDiagnosis{}, db)
+	o.(*ResolverActivity).userModel.Init(models.User{}, db)
+	o.(*ResolverActivity).jobAreaModel.Init(models.JobArea{}, db)
+	o.(*ResolverActivity).taskModel.Init(models.Task{}, db)
 	return o
 }
 func (o *ResolverActivity) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {

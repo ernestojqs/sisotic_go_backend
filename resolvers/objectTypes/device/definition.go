@@ -24,6 +24,9 @@ type Device struct {
 	resolverActivityModel   models.ResolverActivity
 	technicalDiagnosisModel models.TechnicalDiagnosis
 	collegeDependencyModel  models.CollegeDependency
+	taskModel               models.Task
+	userModel               models.User
+	jobAreaModel            models.JobArea
 }
 
 func NewDevice(db dbutils.DBInterface) (o resolvers.ObjectTypeInterface) {
@@ -32,11 +35,15 @@ func NewDevice(db dbutils.DBInterface) (o resolvers.ObjectTypeInterface) {
 		resolverActivityModel:   models.ResolverActivity{},
 		technicalDiagnosisModel: models.TechnicalDiagnosis{},
 		collegeDependencyModel:  models.CollegeDependency{},
+		taskModel:               models.Task{},
 	}
 	o.(*Device).model.Init(models.Device{}, db)
 	o.(*Device).resolverActivityModel.Init(models.ResolverActivity{}, db)
 	o.(*Device).technicalDiagnosisModel.Init(models.TechnicalDiagnosis{}, db)
 	o.(*Device).collegeDependencyModel.Init(models.CollegeDependency{}, db)
+	o.(*Device).taskModel.Init(models.Task{}, db)
+	o.(*Device).userModel.Init(models.User{}, db)
+	o.(*Device).jobAreaModel.Init(models.JobArea{}, db)
 	return o
 }
 func (o *Device) Resolver(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {

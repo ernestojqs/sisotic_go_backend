@@ -24,17 +24,24 @@ import (
 )
 
 func (o *TechnicalDiagnosis) readDevice(id primitive.ObjectID) (device models.Device, err definitionError.GQLError) {
-	result, rerr := o.model.Read(map[string]any{"_id": id, "currentSupportStatus": enums.SUPPORTSTATUSENUM_PROCESS}, nil)
+	result, rerr := o.deviceModel.Read(map[string]any{"_id": id, "placeOfCare": enums.PLACEOFCAREENUM_WORKSHOP, "isSupport": true}, nil)
 	if rerr != nil || len(result.([]models.Device)) == 0 {
 		lib.Logs.System.Warning().Println(gqlErrors.ERROR_QUERY_DEVICE_IN_DB)
 		err = definitionError.NewError(gqlErrors.ERROR_QUERY_DEVICE_IN_DB, nil)
 		return
 	}
-	return result.([]models.Device)[0], nil
+
+	device = result.([]models.Device)[0]
+	if device.CurrentSupportStatus != enums.SUPPORTSTATUSENUM_PROCESS {
+		lib.Logs.System.Warning().Println(gqlErrors.ERROR_DEVICE_IS_NOT_IN_PROCESS)
+		err = definitionError.NewError(gqlErrors.ERROR_DEVICE_IS_NOT_IN_PROCESS, nil)
+	}
+
+	return
 }
 
 func (o *TechnicalDiagnosis) updateDevice(id primitive.ObjectID, inputValues map[string]any) (device models.Device, err definitionError.GQLError) {
-	result, rerr := o.model.Update(inputValues, map[string]any{"_id": id}, nil)
+	result, rerr := o.deviceModel.Update(inputValues, map[string]any{"_id": id}, nil)
 	if rerr != nil || len(result.([]models.Device)) == 0 {
 		lib.Logs.System.Warning().Println(gqlErrors.ERROR_UPDATE_DEVICE_IN_DB)
 		err = definitionError.NewError(gqlErrors.ERROR_UPDATE_DEVICE_IN_DB, nil)
@@ -45,6 +52,11 @@ func (o *TechnicalDiagnosis) updateDevice(id primitive.ObjectID, inputValues map
 
 func (o *TechnicalDiagnosis) createTechnicalDiagnosisMutation(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
 	input := info.Args["input"].(map[string]any)
+	if input["deviceID"] == nil {
+		lib.Logs.System.Warning().Println(gqlErrors.ERROR_EMPTY_OR_INVALID_ID)
+		err = definitionError.NewError(gqlErrors.ERROR_EMPTY_OR_INVALID_ID, nil)
+		return
+	}
 	deviceID := input["deviceID"].(primitive.ObjectID)
 	sess, _ := utils.GetSession(info.SessionID)
 	input["diagnosticUser"] = sess.UserID

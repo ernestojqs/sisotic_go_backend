@@ -12,11 +12,13 @@
 package edgetask
 
 import (
+	"otic/lib"
+
 	"github.com/pjmd89/gogql/lib/gql/definitionError"
 	"github.com/pjmd89/gogql/lib/resolvers"
 )
 
 func (o *EdgeTask) getTasksQuery(info resolvers.ResolverInfo) (r resolvers.DataReturn, err definitionError.GQLError) {
-
+	r = lib.NewEdge(info, "task")
 	return
 }

@@ -59,4 +59,9 @@ var (
 	ERROR_USER_ACCOUNT_BLOCKED             = definitionError.ErrorDescriptor{Code: "054", Message: "The user account has been blocked", Level: definitionError.LEVEL_FATAL}
 	ERROR_TRANSFER__EVIDENCE_REQUERIDED    = definitionError.ErrorDescriptor{Code: "055", Message: "If the place of support is workshop, the transfer evidence is requerided", Level: definitionError.LEVEL_FATAL}
 	ERROR_ACCOUNT_BLOCKED_CONTACT_ADMIN    = definitionError.ErrorDescriptor{Code: "056", Message: "Your account has been locked, contact your administrator to unlock it", Level: definitionError.LEVEL_FATAL}
+	ERROR_DEVICE_IS_NOT_IN_PROCESS         = definitionError.ErrorDescriptor{Code: "057", Message: "To perform this operation the support status of the device must to be \"Process\"", Level: definitionError.LEVEL_FATAL}
+	ERROR_INSERT_TASK_IN_DB                = definitionError.ErrorDescriptor{Code: "058", Message: "Error when trying to create task in database", Level: definitionError.LEVEL_FATAL}
+	ERROR_UPDATE_TASK_IN_DB                = definitionError.ErrorDescriptor{Code: "059", Message: "Error when trying to update task in database", Level: definitionError.LEVEL_FATAL}
+	ERROR_DELETE_TASK_IN_DB                = definitionError.ErrorDescriptor{Code: "060", Message: "Error when trying to delete task in database", Level: definitionError.LEVEL_FATAL}
+	ERROR_QUERY_TASK_IN_DB                 = definitionError.ErrorDescriptor{Code: "061", Message: "Task not found in database", Level: definitionError.LEVEL_FATAL}
 )
